@@ -10,7 +10,7 @@
         <Button x:Name="button" Content="Узнать" HorizontalAlignment="Left" Margin="170,262,0,0" VerticalAlignment="Top" Width="174" Height="52" Click="button_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="383,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="34" Width="72"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="34" Margin="45,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="287"/>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="90,185,0,0" VerticalAlignment="Top" Height="41" Width="327" RenderTransformOrigin="0.355,0.556"/>
+        <Label x:Name="label" Content="" HorizontalAlignment="Left" Margin="90,185,0,0" VerticalAlignment="Top" Height="41" Width="327" RenderTransformOrigin="0.355,0.556"/>
 
     </Grid>
 </Window>
