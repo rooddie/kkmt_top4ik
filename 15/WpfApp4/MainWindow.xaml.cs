@@ -26,6 +26,8 @@ namespace WpfApp4
         public MainWindow()
         {
             InitializeComponent();
+            //System.Drawing.Image myImg = Properties.Resources.ua;
+
             SoundPlayer sp = new SoundPlayer("C:/Users/User/source/repos/WpfApp4/Audio/8bit.wav");
             sp.Play();
 

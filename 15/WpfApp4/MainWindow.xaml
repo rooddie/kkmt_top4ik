@@ -7,12 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="451.592" Width="383.299">
     <Grid Margin="-2,-5,2,5">
-        <Grid.Background>
-            <ImageBrush ImageSource="https://jooinn.com/images/ukraine-grunge-flag-3.jpg"/>
-        </Grid.Background>
+       
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Image HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="375" Source="pack://siteoforigin:,,,/Resources/ua.jpg" Stretch="Fill"/>
         <Button x:Name="Button1" Content="1" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="84" Height="77" Click="Button1_Click" FontSize="48" FontFamily="Vijaya">
             <Button.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -157,7 +156,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="Button16" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="277,331,0,0" VerticalAlignment="Top" Width="84" Height="77" Click="Button16_Click" FontFamily="Vijaya" FontSize="48" >
+        <Button x:Name="Button16" Content="&#xA;" HorizontalAlignment="Left" Margin="277,331,0,0" VerticalAlignment="Top" Width="84" Height="77" Click="Button16_Click" FontFamily="Vijaya" FontSize="48" >
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF0619D6" Offset="0.006"/>
@@ -165,10 +164,9 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Label  x:Name ="label" Content="Пятнашки" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="70" Width="262" FontSize="40
-                " FontFamily="Stencil" FontWeight="Bold" Background="#00000000" Foreground="#FFFFF300"/>
+        <Label  x:Name ="label" Content="Пятнашки" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="70" Width="262" FontSize="40                 " FontFamily="Stencil" FontWeight="Bold" Background="#00000000" Foreground="#FFFFF300"/>
         <Label  x:Name ="label1" Content="0" HorizontalAlignment="Left" Margin="299,32,0,0" VerticalAlignment="Top" Height="48" Width="70" FontSize="24" FontFamily="Vijaya" Foreground="#FFDCF100"/>
-        <Label  x:Name ="kolvo" Content="Количество &#xD;&#xA;шагов" HorizontalAlignment="Left" Margin="224,32,0,0" VerticalAlignment="Top" Height="48" Width="75" FontFamily="Vijaya" Foreground="#FFDCF100"/>
+        <Label  x:Name ="kolvo" Content="Количество &#xA;шагов" HorizontalAlignment="Left" Margin="224,32,0,0" VerticalAlignment="Top" Height="48" Width="75" FontFamily="Vijaya" Foreground="#FFDCF100"/>
         <Label  x:Name ="StartLabel" Content="Пятнашки" HorizontalAlignment="Left" Margin="81,80,0,0" VerticalAlignment="Top" Height="70" Width="262" FontSize="40" FontFamily="Stencil" FontWeight="Bold" Background="#00000000" Foreground="#FFFFF300"/>
         <Button x:Name="SB" Content="Начать" HorizontalAlignment="Left" Margin="99,249,0,0" VerticalAlignment="Top" Width="173" Height="57" Click="Click_Start" FontSize="45" FontFamily="Stencil" FontWeight="Bold" BorderBrush="#00707070" Foreground="#FF011FDE" Background="#00DDFB1E"/>
 
