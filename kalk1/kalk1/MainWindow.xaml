@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kalk1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="395" Width="265">
+        Title="MainWindow" Height="392" Width="324">
     <Grid>
         <Button x:Name="button1" Content="1" HorizontalAlignment="Left" Margin="8,90,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button1_Click"/>
         <Button x:Name="button2" Content="&#xD;&#xA;2&#xD;&#xA;" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button2_Click"/>
@@ -16,16 +16,17 @@
         <Button x:Name="button7" Content="7" HorizontalAlignment="Left" Margin="8,212,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button7_Click"/>
         <Button x:Name="button8" Content="8" HorizontalAlignment="Left" Margin="69,212,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button8_Click"/>
         <Button x:Name="button9" Content="9" HorizontalAlignment="Left" Margin="130,212,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button9_Click"/>
-        <Button x:Name="button0" Content="0" HorizontalAlignment="Left" Margin="8,273,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="button0_Click"/>
-        <Button x:Name="korenButton" Content="√" HorizontalAlignment="Left" Margin="69,273,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="korenButton_Click"/>
-        <Button x:Name="answButton" Content="=" HorizontalAlignment="Left" Margin="130,273,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="answButton_Click"/>
+        <Button x:Name="button0" Content="0" HorizontalAlignment="Left" Margin="8,273,0,0" VerticalAlignment="Top" Width="117" Height="56" Click="button0_Click"/>
+        <Button x:Name="korenButton" Content="√" HorizontalAlignment="Left" Margin="253,90,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="korenButton_Click"/>
+        <Button x:Name="answButton" Content="=" HorizontalAlignment="Left" Margin="253,151,0,0" VerticalAlignment="Top" Width="56" Height="178" Click="answButton_Click"/>
         <Button x:Name="plusButton" Content="+" HorizontalAlignment="Left" Margin="191,90,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="plusButton_Click"/>
         <Button x:Name="minusButton" Content="-" HorizontalAlignment="Left" Margin="191,151,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="minusButton_Click"/>
         <Button x:Name="proizButton" Content="*" HorizontalAlignment="Left" Margin="191,212,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="proizButton_Click"/>
         <Button x:Name="delButton" Content="/" HorizontalAlignment="Left" Margin="191,273,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="delButton_Click"/>
         <Label x:Name="answLabel" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="176" Height="61"/>
-        <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="89,334,0,0" VerticalAlignment="Top" Width="75" Click="clearButton_Click"/>
+        <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="121,334,0,0" VerticalAlignment="Top" Width="75" Click="clearButton_Click"/>
         <Label x:Name="textLabel" Content="" HorizontalAlignment="Left" Margin="191,45,0,0" VerticalAlignment="Top" Width="66"/>
+        <Button x:Name="dotButton" Content="•" HorizontalAlignment="Left" Margin="130,273,0,0" VerticalAlignment="Top" Width="56" Height="56" Click="dotAdd"/>
 
     </Grid>
 </Window>

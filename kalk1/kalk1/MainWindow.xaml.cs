@@ -26,6 +26,7 @@ namespace kalk1
             InitializeComponent();
         }
 
+        //Добавление цифр в лейбл от 0 до 9
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content += "1";
@@ -79,7 +80,7 @@ namespace kalk1
         // Считает корень числа, при условии что в строке только число, без действий
         private void korenButton_Click(object sender, RoutedEventArgs e)
         {
-            
+           
             if (Convert.ToString(answLabel.Content) != "")
             {
                 if (Convert.ToString(answLabel.Content).Contains("*") == false && Convert.ToString(answLabel.Content).Contains("/") == false && Convert.ToString(answLabel.Content).Contains("+") == false && Convert.ToString(answLabel.Content).Contains("-") == false )
@@ -88,6 +89,7 @@ namespace kalk1
 
         }
 
+        //Добавление арифметических знаков в лейбл
         private void plusButton_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content += "+";
@@ -108,11 +110,18 @@ namespace kalk1
             answLabel.Content += "/";
         }
 
+        //Очистка лейбла
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content = "";
         }
+        //Точка(Вещественное число)
+        private void dotAdd(object sender, RoutedEventArgs e)
+        {
+            answLabel.Content += ",";
+        }
 
+        //Функция рассчета данных в лейбле
         private void answButton_Click(object sender, RoutedEventArgs e)
         {
             string st = Convert.ToString(answLabel.Content);
@@ -131,15 +140,13 @@ namespace kalk1
                         if (st[i] == '*' || st[i] == '/' || st[i] == '+' || st[i] == '-')
                         {
                             deistv += st[i];
-    
                             ch2 += ch1;
-                           
                             ch1 = "";
                         }
 
                     }
                     string chh2 = "";
-                    //Удаление действия из строки 2
+                    //Удаление действия из строки 2. Remove не сработал
                     for(int i = 0; i < ch2.Length-1; i++)
                     {
                         chh2 += ch2[i];
