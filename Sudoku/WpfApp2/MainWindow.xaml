@@ -5,31 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400
-        ">
-    <Grid x:Name="gridBut">
+        Title="MainWindow" Height="407.667" Width="381.167" MinWidth="381.167" MaxWidth="381.167" MinHeight="407.667" MaxHeight="407.667" ResizeMode="NoResize">
+    <Grid x:Name="gridBut" Margin="0,0,0,4">
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"/>
             <RowDefinition Height="14*"/>
             <RowDefinition Height="14*"/>
-            <RowDefinition Height="16*"/>
-            <RowDefinition Height="16*"/>
-            <RowDefinition Height="16*"/>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="14*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="42*"/>
             <ColumnDefinition Width="42*"/>
             <ColumnDefinition Width="42*"/>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="44*"/>
-            <ColumnDefinition Width="44*"/>
-            <ColumnDefinition Width="44*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="42*"/>
         </Grid.ColumnDefinitions>
+        <Frame x:Name="frame1" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="139" Margin="0,-13,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF"/>
+        <Frame x:Name="frame1_Copy" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="126" Margin="1,0,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF" Grid.Column="3" Grid.Row="3"/>
+        <Frame x:Name="frame1_Copy1" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="126" Grid.RowSpan="3" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF" Grid.Column="6" Grid.Row="6"/>
+        <Frame x:Name="frame1_Copy2" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="124" Grid.RowSpan="3" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF" Grid.Column="6"/>
+        <Frame x:Name="frame1_Copy3" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="126" Margin="0,41.667,0,-0.667" Grid.RowSpan="4" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF" Grid.Row="5"/>
 
     </Grid>
 </Window>
