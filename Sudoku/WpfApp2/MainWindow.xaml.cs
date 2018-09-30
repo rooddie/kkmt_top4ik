@@ -23,21 +23,27 @@ namespace WpfApp2
         public int[,] timeMas = new int[9, 9]; //Временный массив для хранения промежуточных перестановок
         public int[] swapMas = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };//Массив, элементы которого отвечают за перестановки
         public int[,] array = new int[9, 9];//Основной массив
+        public int digitToSud = 0;
+        
         public MainWindow()
         {
             InitializeComponent();
-            createPos();
-
+            
         }
 
         //Функция создания поля
         public void createPos()
         {
+            listDigit.Visibility = Visibility.Visible;
             Random rnd = new Random();//Рандом
-
+            //Next - задает диапазон от 1 до 3, 3 не вкючительно
             int posSwap =rnd.Next(1, 3); // Случайное число для свапа элементов swapMas
-           
-            int n = 3;//Длина маленьких квадратов
+            //listDigit.Visibility = Visibility.Visible;
+            for (int i = 1;i<=9;i++)
+            {
+                listDigit.Items.Add(i.ToString());
+            }
+            int n = 3;//Длина маленьких квадратов судоку
 
             //Массив заполнения судоку, не перемешанными элементами
             for (int i = 0; i < 9; i++)
@@ -48,7 +54,8 @@ namespace WpfApp2
                 }
             }
 
-            //Перемешивание swapMas, для перемешивания столбиков и столбцов
+            //Перемешивание swapMas.
+            //На основе этого массива, будут перемешаны столбики и столбцы матрицы
             for (int i = 0; i < 9; i += 3)
             {
                 if (posSwap == 1)
@@ -72,8 +79,8 @@ namespace WpfApp2
             transp();
             for (int i = 0; i < swapCount; i++)
              {
-                 swap_col();
-                 swap_row();
+                 swapCol();
+                 swapRow();
              }
             transp();
 
@@ -84,41 +91,38 @@ namespace WpfApp2
                 {
                     if (j == 0||j == 3||j== 6)
                     {
-                        int elCount = 2;// rnd.Next(1,3); //Сложность судоку. Кол-во цифр в одной мини строке
+                        int elCount = 2;// rnd.Next(1,3); //Сложность судоку. Кол-во пустых ячеек в строке квадрата 3х3
                         if (elCount == 1)
                         {
                             int hiddEl = rnd.Next(0, 3);//Позиция пробела в строке
                             if (hiddEl == 0)
                             {
-                                TextBox textBox = new TextBox();
-                                
-                                gridAdd1(i, j, 0, false, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, true, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, true, textBox2);
-
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, false, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, true, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, true, textBox2);
                             }
                             
                             else if (hiddEl == 1)
                             {
-                                TextBox textBox = new TextBox();
-                                gridAdd1(i, j, 0, true, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, false, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, true, textBox2);
- 
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, true, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, false, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, true, textBox2);
                             }
 
                             else if (hiddEl == 2)
                             {
-                                TextBox textBox = new TextBox();
-                                gridAdd1(i, j, 0, true, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, true, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, false, textBox2);
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, true, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, true, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, false, textBox2);
                             }
                         }
                         else if(elCount == 2)
@@ -126,44 +130,39 @@ namespace WpfApp2
                             int hiddEl2 = rnd.Next(0, 3);
                             if (hiddEl2 == 0)
                             {
-                                TextBox textBox = new TextBox();
-                                gridAdd1(i, j, 0, false, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, false, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, true, textBox2);
-
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, true, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, false, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, false, textBox2);
                             }
                             else if(hiddEl2 == 1)
                             {
-                                TextBox textBox = new TextBox();
-                                gridAdd1(i, j, 0, false, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, true, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, false, textBox2);
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, false, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, true, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, false, textBox2);
                             }
 
                             else if(hiddEl2 == 2)
                             {
-                                TextBox textBox = new TextBox();
-                                gridAdd1(i, j, 0, false, textBox);
-                                TextBox textBox1 = new TextBox();
-                                gridAdd1(i, j, 1, false, textBox1);
-                                TextBox textBox2 = new TextBox();
-                                gridAdd1(i, j, 2, true, textBox2);
+                                Button textBox = new Button();
+                                gridAdd(i, j, 0, false, textBox);
+                                Button textBox1 = new Button();
+                                gridAdd(i, j, 1, false, textBox1);
+                                Button textBox2 = new Button();
+                                gridAdd(i, j, 2, true, textBox2);
                             }
                             
                         }
                         
                     }
-                    //TextBox textBox = new TextBox();
+                    //Button textBox = new Button();
                     //textBox.Name = "btn" + Convert.ToString(i + j);
                     //textBox.Text = Convert.ToString(array[i,j]);
-
-
-
-                    
                 }
 
             }
@@ -194,7 +193,7 @@ namespace WpfApp2
         }
 
         //Функция свапа строк матрицы
-        public void swap_row()
+        public void swapRow()
         {
             for (int i = 0; i < 9; i++)
             {               
@@ -216,7 +215,7 @@ namespace WpfApp2
         }
 
         //Функция свапа столбцов матрицы
-        public void swap_col()
+        public void swapCol()
         {
             for (int i = 0; i < 9; i++)
             {
@@ -237,23 +236,58 @@ namespace WpfApp2
             }
         }
 
-        public void gridAdd1(int i, int j, int nextEl, bool chek, TextBox tb)
+        //Функция добавления в сетку готового массива
+        public void gridAdd(int i, int j, int nextEl, bool chek, Button but)
         {
-            tb.Name = "btn" + i.ToString() + (j).ToString();
+            //Создание кнопки
+            but.Name = "btn" + i.ToString() + (j).ToString();
+
             if (chek == true)
             {
-                tb.Text = tb.Text = array[i, j + nextEl].ToString(); ;
-            }
-            else tb.Text = "";
-            tb.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.2 };
-            
+                but.Content = array[i, j + nextEl].ToString();
+                //but.IsEnabled = false;
 
+            }
+            else
+            {
+                but.Content = "";
+                
+                but.Click += delegate
+                 {
+                     listDigit.Visibility = Visibility.Visible;
+                     addDigit(but);
+                 };
+                
+            }
+
+            but.Background = new SolidColorBrush() { Opacity = 0.0000001 };
             //Добавление кнопки к сетке
-            gridBut.Children.Add(tb);
-            Grid.SetRow(tb, i);
-            Grid.SetColumn(tb, j+nextEl);
+            gridBut.Children.Add(but);
+            Grid.SetRow(but, i);
+            Grid.SetColumn(but, j+nextEl);
+
+            
         }
 
+        private void startGame(object sender, RoutedEventArgs e)
+        {
+            nameGame.Visibility = Visibility.Hidden;
+            startButton.Visibility = Visibility.Hidden;
+            createPos();
+        }
+
+        private void addDigit(Button but)
+        {
+            but.Content = listDigit.Text;
+        }
+
+        private void restartCkick(object sender, RoutedEventArgs e)
+        {
+            createPos();
+
+        }
+
+     
     }
 }
 
