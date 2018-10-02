@@ -28,7 +28,9 @@ namespace WpfApp2
         public MainWindow()
         {
             InitializeComponent();
-            
+            listDigit.Visibility = Visibility.Hidden;
+            Application.Current.MainWindow.Height = 421;
+            createDigits();//Заполнение comboBox
         }
 
         //Функция создания поля
@@ -39,10 +41,9 @@ namespace WpfApp2
             //Next - задает диапазон от 1 до 3, 3 не вкючительно
             int posSwap =rnd.Next(1, 3); // Случайное число для свапа элементов swapMas
             //listDigit.Visibility = Visibility.Visible;
-            for (int i = 1;i<=9;i++)
-            {
-                listDigit.Items.Add(i.ToString());
-            }
+
+            
+
             int n = 3;//Длина маленьких квадратов судоку
 
             //Массив заполнения судоку, не перемешанными элементами
@@ -245,13 +246,11 @@ namespace WpfApp2
             if (chek == true)
             {
                 but.Content = array[i, j + nextEl].ToString();
-                //but.IsEnabled = false;
-
             }
             else
             {
                 but.Content = "";
-                
+                but.Foreground = new SolidColorBrush(Colors.Red);
                 but.Click += delegate
                  {
                      listDigit.Visibility = Visibility.Visible;
@@ -259,7 +258,6 @@ namespace WpfApp2
                  };
                 
             }
-
             but.Background = new SolidColorBrush() { Opacity = 0.0000001 };
             //Добавление кнопки к сетке
             gridBut.Children.Add(but);
@@ -268,23 +266,49 @@ namespace WpfApp2
 
             
         }
-
+        
+        //Функция клика на кнопку Старт
+        //Название игры и кнопка скрываются
+        //Создается поле судоку
         private void startGame(object sender, RoutedEventArgs e)
         {
             nameGame.Visibility = Visibility.Hidden;
             startButton.Visibility = Visibility.Hidden;
+            Application.Current.MainWindow.Height = 458;
             createPos();
         }
 
+        //Функция добавления в пустую ячейку выбранного числа в comboBox
         private void addDigit(Button but)
         {
             but.Content = listDigit.Text;
         }
-
+        
+        //Функция клика по кнопке рестарт
         private void restartCkick(object sender, RoutedEventArgs e)
         {
-            createPos();
+            //Поиск всех кнопок в Grid
+            foreach (DependencyObject button in gridBut.Children)
+            {
+                if (button.GetType().ToString() == "System.Windows.Controls.Button")
+                {
+                    ((Button)button).Content = "";
 
+                }
+                //Контент рестарта очищается, так как это тоже кнопка
+                restartButton.Content = "Restart";
+            }
+            createPos();
+        }
+        
+        //Заполнение comboBox 
+        private void createDigits()
+        {
+            listDigit.Visibility = Visibility.Visible;
+            for (int i = 1; i <= 9; i++)
+            {
+                listDigit.Items.Add(i.ToString());
+            }
         }
 
      
