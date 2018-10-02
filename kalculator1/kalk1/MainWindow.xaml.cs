@@ -22,7 +22,6 @@ namespace kalk1
         {
             InitializeComponent();
         }
-
         //Добавление цифр в лейбл от 0 до 9
         private void button1_Click(object sender, RoutedEventArgs e)
         {
