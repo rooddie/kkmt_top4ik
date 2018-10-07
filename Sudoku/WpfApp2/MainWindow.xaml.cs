@@ -23,14 +23,16 @@ namespace WpfApp2
         public int[,] timeMas = new int[9, 9]; //Временный массив для хранения промежуточных перестановок
         public int[] swapMas = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };//Массив, элементы которого отвечают за перестановки
         public int[,] array = new int[9, 9];//Основной массив
-        public int digitToSud = 0;
-        
+        public string[,] endGameMas = new string[9, 9];//
+
+
         public MainWindow()
         {
             InitializeComponent();
             listDigit.Visibility = Visibility.Hidden;
             Application.Current.MainWindow.Height = 421;
             createDigits();//Заполнение comboBox
+            winGame.Visibility = Visibility.Hidden;
         }
 
         //Функция создания поля
@@ -39,10 +41,7 @@ namespace WpfApp2
             listDigit.Visibility = Visibility.Visible;
             Random rnd = new Random();//Рандом
             //Next - задает диапазон от 1 до 3, 3 не вкючительно
-            int posSwap =rnd.Next(1, 3); // Случайное число для свапа элементов swapMas
-            //listDigit.Visibility = Visibility.Visible;
-
-            
+            int posSwap = rnd.Next(1, 3); // Случайное число для свапа элементов swapMas
 
             int n = 3;//Длина маленьких квадратов судоку
 
@@ -73,101 +72,108 @@ namespace WpfApp2
                 }
             }
 
-            
+
             int swapCount = rnd.Next(10, 25);//Количество перемешиваний
 
             //Перемешивание массива
             transp();
             for (int i = 0; i < swapCount; i++)
-             {
-                 swapCol();
-                 swapRow();
-             }
+            {
+                swapCol();
+                swapRow();
+            }
             transp();
-
+            for (int i = 0; i < 9; i++)
+            {
+                tLabel.Content += "\n";
+                for (int j = 0; j < 9; j++)
+                {
+                    tLabel.Content += array[i, j].ToString();
+                }
+            }
             //Процесс создания поля судоку
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    if (j == 0||j == 3||j== 6)
+                    if (j == 0 || j == 3 || j == 6)
                     {
-                        int elCount = 2;// rnd.Next(1,3); //Сложность судоку. Кол-во пустых ячеек в строке квадрата 3х3
+                        int elCount = 1;// rnd.Next(1,3); //Сложность судоку. Кол-во пустых ячеек в строке квадрата 3х3
                         if (elCount == 1)
                         {
                             int hiddEl = rnd.Next(0, 3);//Позиция пробела в строке
                             if (hiddEl == 0)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, false, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, true, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, true, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, false, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, true, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, true, sudokuElem2);
                             }
-                            
+
                             else if (hiddEl == 1)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, true, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, false, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, true, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, true, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, false, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, true, sudokuElem2);
                             }
 
                             else if (hiddEl == 2)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, true, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, true, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, false, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, true, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, true, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, false, sudokuElem2);
                             }
                         }
-                        else if(elCount == 2)
+                        else if (elCount == 2)
                         {
                             int hiddEl2 = rnd.Next(0, 3);
                             if (hiddEl2 == 0)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, true, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, false, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, false, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, true, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, false, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, false, sudokuElem2);
                             }
-                            else if(hiddEl2 == 1)
+                            else if (hiddEl2 == 1)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, false, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, true, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, false, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, false, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, true, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, false, sudokuElem2);
                             }
 
-                            else if(hiddEl2 == 2)
+                            else if (hiddEl2 == 2)
                             {
-                                Button textBox = new Button();
-                                gridAdd(i, j, 0, false, textBox);
-                                Button textBox1 = new Button();
-                                gridAdd(i, j, 1, false, textBox1);
-                                Button textBox2 = new Button();
-                                gridAdd(i, j, 2, true, textBox2);
+                                Button sudokuElem = new Button();
+                                gridAdd(i, j, 0, false, sudokuElem);
+                                Button sudokuElem1 = new Button();
+                                gridAdd(i, j, 1, false, sudokuElem1);
+                                Button sudokuElem2 = new Button();
+                                gridAdd(i, j, 2, true, sudokuElem2);
                             }
-                            
+
                         }
-                        
+
                     }
-                    //Button textBox = new Button();
-                    //textBox.Name = "btn" + Convert.ToString(i + j);
-                    //textBox.Text = Convert.ToString(array[i,j]);
+                    //Button sudokuElem = new Button();
+                    //sudokuElem.Name = "btn" + Convert.ToString(i + j);
+                    //sudokuElem.Text = Convert.ToString(array[i,j]);
                 }
 
             }
-            
+
         }
 
         //Функция транспонирования матрицы
@@ -184,11 +190,11 @@ namespace WpfApp2
             //Присваивание новых данных основному массиву для вывода
             for (int i = 0; i < 9; i++)
             {
-                
+
                 for (int j = 0; j < 9; j++)
                 {
                     array[i, j] = timeMas[i, j];
-                    
+
                 }
             }
         }
@@ -197,11 +203,11 @@ namespace WpfApp2
         public void swapRow()
         {
             for (int i = 0; i < 9; i++)
-            {               
+            {
                 for (int j = 0; j < 9; j++)
                 {
                     array[i, j] = timeMas[i, j];
-                    
+
                 }
             }
             //Присваивание новых данных основному массиву для вывода
@@ -228,11 +234,11 @@ namespace WpfApp2
             }
             //Присваивание новых данных основному массиву для вывода
             for (int i = 0; i < 9; i++)
-            {                
+            {
                 for (int j = 0; j < 9; j++)
                 {
                     array[i, j] = timeMas[i, j];
-                    
+
                 }
             }
         }
@@ -246,27 +252,39 @@ namespace WpfApp2
             if (chek == true)
             {
                 but.Content = array[i, j + nextEl].ToString();
+                endGameMas[i, j + nextEl] = array[i, j + nextEl].ToString();
             }
             else
             {
                 but.Content = "";
+                endGameMas[i, j + nextEl] = " ";
+
                 but.Foreground = new SolidColorBrush(Colors.Red);
                 but.Click += delegate
-                 {
-                     listDigit.Visibility = Visibility.Visible;
-                     addDigit(but);
-                 };
-                
+                {
+                    addDigit(but);
+                    endGameMas[i, j + nextEl] = listDigit.Text;
+
+                    //Если массивы равны, наступает конец игры
+                    if (comparsionMas(endGameMas, array) == true)
+                    {
+                        listDigit.Visibility = Visibility.Hidden;
+                        Application.Current.MainWindow.Height = 421;
+                        winGame.Visibility = Visibility.Visible;
+                    }
+                };
+
+
             }
             but.Background = new SolidColorBrush() { Opacity = 0.0000001 };
             //Добавление кнопки к сетке
             gridBut.Children.Add(but);
             Grid.SetRow(but, i);
-            Grid.SetColumn(but, j+nextEl);
+            Grid.SetColumn(but, j + nextEl);
 
-            
+
         }
-        
+
         //Функция клика на кнопку Старт
         //Название игры и кнопка скрываются
         //Создается поле судоку
@@ -283,7 +301,7 @@ namespace WpfApp2
         {
             but.Content = listDigit.Text;
         }
-        
+
         //Функция клика по кнопке рестарт
         private void restartCkick(object sender, RoutedEventArgs e)
         {
@@ -300,7 +318,7 @@ namespace WpfApp2
             }
             createPos();
         }
-        
+
         //Заполнение comboBox 
         private void createDigits()
         {
@@ -311,7 +329,25 @@ namespace WpfApp2
             }
         }
 
-     
+        //Функция сравнения массивов
+        private bool comparsionMas(string[,] arr1, int[,] arr2)
+        {
+            if (arr1.Length == arr2.Length)
+            {
+                for (int i = 0; i < 9; i++)
+                { 
+                    for (int j = 0; j < 9;j++)
+                    if (arr1[i,j].ToString() != arr2[i,j].ToString())
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else return false;
+        }
+
+
     }
 }
 
@@ -321,18 +357,18 @@ if (elCount == 1)
                         int hiddEl1 = rnd.Next(0, 3);
                         if (hiddEl1 == 0)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
+                            sudokuElem.Text = "";
                         }
                         else if (hiddEl1 == 1)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
+                            sudokuElem.Text = "";
                         }
                         else if (hiddEl1 == 2)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + hiddEl1).ToString();
+                            sudokuElem.Text = "";
                         }
                     }
 
@@ -341,24 +377,24 @@ if (elCount == 1)
                         int hiddEl2 = rnd.Next(0, 3);
                         if (hiddEl2 == 0)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + 0).ToString();
-                            textBox.Text = "";
-                            textBox.Name = "btn" + i.ToString() + (j + 1).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 0).ToString();
+                            sudokuElem.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 1).ToString();
+                            sudokuElem.Text = "";
                         }
                         else if (hiddEl2 == 1)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + 1).ToString();
-                            textBox.Text = "";
-                            textBox.Name = "btn" + i.ToString() + (j + 2).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 1).ToString();
+                            sudokuElem.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 2).ToString();
+                            sudokuElem.Text = "";
                         }
                         else if (hiddEl2 == 2)
                         {
-                            textBox.Name = "btn" + i.ToString() + (j + 0).ToString();
-                            textBox.Text = "";
-                            textBox.Name = "btn" + i.ToString() + (j + 2).ToString();
-                            textBox.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 0).ToString();
+                            sudokuElem.Text = "";
+                            sudokuElem.Name = "btn" + i.ToString() + (j + 2).ToString();
+                            sudokuElem.Text = "";
                         }
                     } 
  */

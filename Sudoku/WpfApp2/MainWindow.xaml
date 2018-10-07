@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="457.333" Width="390" MinWidth="381.167" MaxWidth="400" MinHeight="407.667" MaxHeight="450" ResizeMode="NoResize">
+        Title="MainWindow" Height="457.333" Width="483.333" MinWidth="381.167" MaxWidth="550" MinHeight="407.667" MaxHeight="450" ResizeMode="NoResize">
     <Grid x:Name="gridBut" Height="381" VerticalAlignment="Top" HorizontalAlignment="Left" Width="375">
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"/>
@@ -36,8 +36,11 @@
         <Frame x:Name="frame5" Grid.ColumnSpan="3" Content="" HorizontalAlignment="Left" Height="126" Margin="0,41.667,0,-0.667" Grid.RowSpan="4" VerticalAlignment="Top" Width="124" Background="#FFD3F9FF" Grid.Row="5"/>
         <Label x:Name="nameGame" Content="Sudoku&#xD;&#xA;" Grid.Column="2" HorizontalAlignment="Left" Margin="9.667,32,0,0" VerticalAlignment="Top" Grid.ColumnSpan="5" Height="73" Grid.RowSpan="3" Width="198" FontFamily="Stencil" FontSize="48"/>
         <Button x:Name="startButton" Grid.ColumnSpan="5" Content="Start" Grid.Column="2" Height="75" Margin="11.667,30,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Grid.Row="3" FontFamily="Stencil" FontSize="45" Click="startGame" BorderBrush="White"/>
-        <ComboBox x:Name="listDigit" HorizontalAlignment="Left" Margin="8,47,0,-27" Width="98"  Grid.Row="8" Grid.ColumnSpan="3"/>
+        <ComboBox x:Name="listDigit" HorizontalAlignment="Left" Margin="8,47,0,-27" Width="113"  Grid.Row="8" Grid.ColumnSpan="3"/>
         <Button x:Name="restartButton" Grid.ColumnSpan="2" Content="Restart" Grid.Column="7" HorizontalAlignment="Left" Margin="0,46,0,-28" Grid.Row="8" Width="75" Click="restartCkick"/>
+        <Label x:Name="winGame" Content="Wictory" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="6" Width="223" Grid.Column="2" Margin="9.667,33,0,0" Grid.RowSpan="3" Height="63" FontFamily="Stencil" FontSize="48" Grid.Row="3"/>
+        <Label x:Name="tLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="8" Margin="51.667,8,-95.333,0" Height="205" Grid.RowSpan="6" Width="85"/>
+        <Button Grid.ColumnSpan="4" Content="Проверить" HorizontalAlignment="Left" Width="124" Grid.Column="3" Margin="19.667,46,0,-28" Grid.Row="8" Click="Button_Click"/>
 
     </Grid>
 </Window>
