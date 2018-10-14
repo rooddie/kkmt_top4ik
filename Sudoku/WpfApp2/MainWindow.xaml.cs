@@ -316,7 +316,7 @@ namespace WpfApp2
                 restartButton.Content = "Restart";
             }
             createPos();
-        }
+        } 
 
         //Заполнение comboBox 
         private void createDigits()
@@ -345,7 +345,6 @@ namespace WpfApp2
             }
             else return false;
         }
-
 
     }
 }
