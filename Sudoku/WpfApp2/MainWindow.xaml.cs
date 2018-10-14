@@ -311,7 +311,6 @@ namespace WpfApp2
                 if (button.GetType().ToString() == "System.Windows.Controls.Button")
                 {
                     ((Button)button).Content = "";
-
                 }
                 //Контент рестарта очищается, так как это тоже кнопка
                 restartButton.Content = "Restart";
