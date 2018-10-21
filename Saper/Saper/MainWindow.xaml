@@ -5,45 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="850">
-    <Grid Name="saperGrid" HorizontalAlignment="Left" Width="490" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
+        Title="MainWindow" Height="500" Width="500">
+    <Grid>
+        <MediaElement x:Name="mediaElement" Margin="10,127,12,0"  HorizontalAlignment="Center" Width="470" Height="269" VerticalAlignment="Top" UnloadedBehavior="Play"  />
+        <Label x:Name="nameGame" Content="Sapper game&#xA;" Margin="86,15,2,374" FontFamily="Showcard Gothic" FontSize="48" HorizontalAlignment="Center" Width="404"/>
+        <Label x:Name="ComplexityL" Content="Level of difficulty" FontFamily="Showcard Gothic" FontSize="16" Margin="160,147,150,285" HorizontalAlignment="Center" Width="182"/>
+        <Label x:Name="loseGame" Content="You lose" Margin="0,-1,0,377" FontSize="72" FontFamily="Showcard Gothic"  HorizontalContentAlignment="Center"/>
+        <Button x:Name="hardLevel" Content="Hard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="37" Click="hardlLevel_Click" FontFamily="Showcard Gothic" Margin="204,282,0,0"/>
+        <Button x:Name="easyLevel" Content="Easy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="37" Click="easyLevel_Click" FontFamily="Showcard Gothic" FontSize="16" Margin="204,198,0,0"/>
+        <Button x:Name="normalLevel" Content="Normal" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="37" Click="normalLevel_Click" FontFamily="Showcard Gothic" Margin="204,240,0,0"/>
+        <Button x:Name="menuButton" Content="In menu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="37"  FontFamily="Showcard Gothic" Margin="204,416,0,0" Click="menuButton_Click"/>
 
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="40*"/>
+        <Grid x:Name="saperGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
 
-        </Grid.ColumnDefinitions>
-        <Label x:Name="nameGame" Content="Sapper game&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="8" Grid.Column="1" Margin="27,10,0,0" Height="84" Width="342" FontFamily="Showcard Gothic" FontSize="48" Grid.RowSpan="2" Grid.Row="1"/>
-        <Label x:Name="ComplexityL" Content="Level of difficulty" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Grid.Column="3" Grid.Row="3" Height="32" Width="181" FontFamily="Showcard Gothic" FontSize="16" Margin="5,21,0,0" Grid.RowSpan="2"/>
-        <Button x:Name="easyLevel" Grid.ColumnSpan="2" Content="Easy" VerticalAlignment="Top" Grid.Column="4" Grid.Row="4" Height="32" Margin="0,22,0,0" Grid.RowSpan="2" Click="easyLevel_Click"/>
-        <Button x:Name="normalLevel" Grid.ColumnSpan="2" Content="Normal" VerticalAlignment="Top" Grid.Column="4" Grid.Row="5" Height="30" Margin="0,18,0,0" Grid.RowSpan="2" Click="normalLevel_Click"/>
-        <Button x:Name="hardLevel" Grid.ColumnSpan="2" Content="Hard" VerticalAlignment="Top" Grid.Column="4" Margin="0,11,0,0" Grid.Row="6" Height="32" Click="hardlLevel_Click"/>
-        <Label x:Name="loseGame" Content="You lose" Margin="0,0,0,42" Grid.RowSpan="3" FontSize="72" FontFamily="Showcard Gothic" Grid.ColumnSpan="10" Grid.Row="1"  HorizontalContentAlignment="Center"/>
-        <MediaElement x:Name="mediaElement" Grid.ColumnSpan="10" Margin="10,21,10,38" Grid.Row="3" Grid.RowSpan="7"  />
-        <Label x:Name="label" Content="" Grid.Column="9" HorizontalAlignment="Left" Margin="89,14,-326,0" VerticalAlignment="Top" Width="286" Height="244" Grid.RowSpan="6"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
 
-
-
+            </Grid.ColumnDefinitions>
+            
+        </Grid>
 
     </Grid>
+
+
 </Window>
