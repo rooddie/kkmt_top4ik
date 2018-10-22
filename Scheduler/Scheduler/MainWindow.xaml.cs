@@ -24,24 +24,105 @@ namespace Scheduler
         public XmlDocument xDoc = new XmlDocument();
         public XmlElement xRoot;
 
-        public string numXml;
-        public string themeXml;
-        public string textXml;
-        public string datatimeXml;
+        public string numXml = "";
+        public string themeXml = "";
+        public string textXml = "";
+        public string datatimeXml = "";
+
+        List<string> Numbers = new List<string>();
+        List<string> Themes = new List<string>();
+        List<string> Texts = new List<string>();
+        List<string> DataTimes = new List<string>();
+
+        public int n = 0;
 
         public MainWindow()
         {
             InitializeComponent();
 
             createStyles();
-
+            XmlRead();
+            createPanel();
         }
+
+        private void XmlRead()
+        {
+            int i = 0;
+            XmlTextReader reader = new XmlTextReader(file);
+            while (reader.Read())
+            {
+                if (reader.Name == "Stiker")
+                    n++;
+                if (reader.Name == "Theme")
+                {
+                    Themes.Add(reader.ReadInnerXml().ToString());
+
+                }
+                if (reader.Name == "Content")
+                {
+                    Texts.Add(reader.ReadInnerXml().ToString());
+
+                }
+                if (reader.Name == "DataTime")
+                {
+                    DataTimes.Add(reader.ReadInnerXml().ToString());
+
+                }
+            }
+        }
+
+        /// <createPanel>
+        /// Функция создания заметок на экране
+        /// </createPanel>
+        private void createPanel()
+        {
+            for(int i = 0; i < Themes.Count; i++)
+            {
+                Expander expander = new Expander();
+                StackPanel stackPanel1 = new StackPanel();
+                TextBlock textBlock_1 = new TextBlock();
+                TextBlock textBlock_2 = new TextBlock();
+
+                textBlock_1.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
+                textBlock_1.Text = Themes[i].ToString();
+                textBlock_1.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                textBlock_1.Foreground = new SolidColorBrush(Colors.White);
+                textBlock_1.Margin = new Thickness(0);
+                textBlock_1.Padding = new Thickness(20,10,20,10);
+
+                textBlock_2.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
+                textBlock_2.Opacity = 68;
+                textBlock_2.Text = Texts[i].ToString();
+                textBlock_2.TextWrapping = TextWrapping.Wrap;
+                textBlock_2.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                textBlock_2.Foreground = new SolidColorBrush(Colors.White);
+                textBlock_2.Margin = new Thickness(0);
+                textBlock_2.Padding = new Thickness(20,2,20,0);
+
+                stackPanel1.Orientation = Orientation.Vertical;
+                stackPanel1.Margin = new Thickness(0);
+
+                expander.HorizontalAlignment = HorizontalAlignment.Stretch;
+                expander.Header = DataTimes[i].ToString();
+                expander.Margin = new Thickness(5, 0, 5, 0);
+                expander.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                expander.Foreground = new SolidColorBrush(Colors.White);
+
+                stackPanel1.Children.Add(textBlock_1);
+                stackPanel1.Children.Add(textBlock_2);
+                expander.Content = stackPanel1;
+                listPanel.Children.Add(expander);
+            }
+          
+        }
+
 
         private void addSet_Click(object sender, RoutedEventArgs e)
         {
             AddSetGrid.Visibility = Visibility.Visible;
             AddSetBut.Visibility = Visibility.Hidden;
             backBut.Visibility = Visibility.Visible;
+            listPanel.Visibility = Visibility.Hidden;
 
         }
 
@@ -51,21 +132,43 @@ namespace Scheduler
             AddSetBut.Visibility = Visibility.Visible;
             AddSetGrid.Visibility = Visibility.Hidden;
             themesGrid.Visibility = Visibility.Hidden;
+            listPanel.Visibility = Visibility.Visible;
 
         }
 
         private void saveClick(object sender, RoutedEventArgs e)
         {
-            Volume.IsChecked = false;
-            closeSettingBut();
-            backBut.Visibility = Visibility.Hidden;
-            AddSetBut.Visibility = Visibility.Visible;
-            AddSetGrid.Visibility = Visibility.Hidden;
+            
 
             themeXml = temaBox.Text;
             textXml = new TextRange(textToEl.Document.ContentStart, textToEl.Document.ContentEnd).Text;
             datatimeXml = dataEl.Text + " " + timeEl.Text;
-            xmlAdd();
+
+            if (themeXml == "" || textXml == "" || datatimeXml == "" || dataEl.Text == null || timeEl.Text == null)
+            {
+                MessageBox.Show("Присутствуют незаполненные поля");
+            }
+            else
+            {
+                Volume.IsChecked = false;
+                backBut.Visibility = Visibility.Hidden;
+                AddSetBut.Visibility = Visibility.Visible;
+                AddSetGrid.Visibility = Visibility.Hidden;
+                listPanel.Visibility = Visibility.Visible;
+                xmlAdd();
+
+
+
+                listPanel.Children.Clear();
+                XmlRead();
+                createPanel();
+                Themes.Clear();
+                Texts.Clear();
+                DataTimes.Clear();
+            }
+        
+
+
         }
 
        
@@ -75,21 +178,10 @@ namespace Scheduler
             AddSetBut.Visibility = Visibility.Hidden;
             backBut.Visibility = Visibility.Visible;
             AddSetGrid.Visibility = Visibility.Hidden;
+            listPanel.Visibility = Visibility.Hidden;
 
         }
 
-        private void closeSettingBut()
-        {
-            
-            languagesBut.Visibility = Visibility.Hidden;
-            temesBut.Visibility = Visibility.Hidden;
-        }
-
-        private void openSettingBut()
-        {
-            languagesBut.Visibility = Visibility.Visible;
-            temesBut.Visibility = Visibility.Visible;
-        }
 
         void createStyles()
         {
@@ -128,6 +220,8 @@ namespace Scheduler
                     Grid.SetColumn(listBut[i, j], j);
                 }
         }
+
+
 
         void xmlAdd()
         {

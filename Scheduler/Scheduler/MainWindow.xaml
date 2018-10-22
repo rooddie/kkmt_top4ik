@@ -18,110 +18,57 @@
                 <!-- throw in some extra colour for our floating action button -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}">
-                <Setter Property="Foreground" Value="{Binding (TextElement.Foreground), RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type FrameworkElement}}}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}"/>
-                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0,0,1,0"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="CaretBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
-                <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="AllowDrop" Value="True"/>
-                <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-                <Setter Property="Validation.ErrorTemplate">
-                    <Setter.Value>
-                        <ControlTemplate/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="materialDesign:TextFieldAssist.IncludeSpellingSuggestions" Value="{Binding (SpellCheck.IsEnabled), RelativeSource={RelativeSource Self}}"/>
-                <Setter Property="materialDesign:TextFieldAssist.NewSpecHighlightingEnabled" Value="False"/>
-                <Setter Property="materialDesign:TextFieldAssist.RippleOnFocusEnabled" Value="False"/>
-                <Setter Property="ContextMenu">
-                    <Setter.Value>
-                        <ContextMenu>
-                            <MenuItem Command="ApplicationCommands.Cut">
-                                <MenuItem.Icon>
-                                    <materialDesign:PackIcon Kind="Clip"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="ApplicationCommands.Copy">
-                                <MenuItem.Icon>
-                                    <materialDesign:PackIcon Kind="ContentCopy"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="ApplicationCommands.Paste">
-                                <MenuItem.Icon>
-                                    <materialDesign:PackIcon Kind="ContentPaste"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border x:Name="border" CornerRadius="7"
-        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
 
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsInactiveSelectionHighlightEnabled" Value="True"/>
-                            <Condition Property="IsSelectionActive" Value="False"/>
-                        </MultiTrigger.Conditions>
-                        <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-                    </MultiTrigger>
-                </Style.Triggers>
-            </Style>
+
+
         </ResourceDictionary>
     </Window.Resources>
     <Grid Name="mainGrid" Background="#FFC1DBEA">
-        <StackPanel Name="UpLine" Background="#FF7378EC" Margin="0,0,0,356">
+        <Grid>
 
-            <Grid Height="60">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="30*"/>
-                </Grid.ColumnDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,90,75,20">
+                <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA">
+                    
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel x:Name="UpLine" Background="#FF7378EC" Margin="0,0,0,370">
+
+                <Grid Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
 
 
-                <Button x:Name="temesBut" Content="Темы" HorizontalAlignment="Left" Margin="82,31,-20,-12" VerticalAlignment="Top" Width="112" Height="19" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="White" FontFamily="Sitka Display" Click="themes_Click" Visibility="Hidden" Grid.Column="2"/>
-                <Button x:Name="languagesBut" Content="Язык" HorizontalAlignment="Left" Margin="82,60,-20,-41" VerticalAlignment="Top" Width="112" Height="19" BorderBrush="#FFE86363" Background="#FFE86363" Foreground="White" FontFamily="Sitka Display" Visibility="Hidden" Grid.Column="2"/>
-                <Label x:Name="label" Content="Планировщик задач" Grid.Column="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="14" Foreground="#DDFFFFFF" />
-                <Button x:Name="AddSetBut" Grid.Column="0" Content="+ Добавить задачу" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Click="addSet_Click" FontWeight="Normal" Background="#FFE86363"/>
-                <Button x:Name="backBut" Content="Назад" HorizontalAlignment="Left" Margin="14" VerticalAlignment="Top" Width="74" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Background="#FFE86363" Click="backClick"  Visibility="Hidden"/>
-                <materialDesign:PopupBox Grid.Column="2" Margin="103,4,0,9"
+                    <Button x:Name="temesBut" Content="Темы" HorizontalAlignment="Left" Margin="82,31,-20,-12" VerticalAlignment="Top" Width="112" Height="19" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="White" FontFamily="Sitka Display" Click="themes_Click" Visibility="Hidden" Grid.Column="2"/>
+                    <Button x:Name="languagesBut" Content="Язык" HorizontalAlignment="Left" Margin="82,60,-20,-41" VerticalAlignment="Top" Width="112" Height="19" BorderBrush="#FFE86363" Background="#FFE86363" Foreground="White" FontFamily="Sitka Display" Visibility="Hidden" Grid.Column="2"/>
+                    <Label x:Name="label" Content="Планировщик задач" Grid.Column="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="14" Foreground="#DDFFFFFF" />
+                    <Button x:Name="AddSetBut" Grid.Column="0" Content="+ Добавить задачу" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Click="addSet_Click" FontWeight="Normal" Background="#FFE86363"/>
+                    <Button x:Name="backBut" Content="Назад" HorizontalAlignment="Left" Margin="14" VerticalAlignment="Top" Width="74" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Background="#FFE86363" Click="backClick"  Visibility="Hidden"/>
+                    <materialDesign:PopupBox Grid.Column="2" Margin="103,4,0,9"
                   Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                   PlacementMode="BottomAndAlignCentres"
                   ToolTipService.Placement="Right"
                   ToolTip="Настройки" Height="Auto" Width="47" Background="#FFE86363">
-                    <materialDesign:PopupBox.ToggleContent >
-                        <materialDesign:PackIcon Kind="SettingsOutline" Height="28" Width="28" />
-                    </materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PopupBox.ToggleContent >
+                            <materialDesign:PackIcon Kind="SettingsOutline" Height="28" Width="28" />
+                        </materialDesign:PopupBox.ToggleContent>
+                        <StackPanel>
+                            <Button ToolTip="Изменение темы" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
+                                <materialDesign:PackIcon Kind="Theme" />
+                            </Button>
+                            <Button ToolTip="Изменение языка" Background="#FFE86363" Foreground="#DDFFFFFF">
+                                <materialDesign:PackIcon Kind="Language" />
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+            </StackPanel>
 
-                    <StackPanel>
-                        <Button ToolTip="Изменение темы" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
-                            <materialDesign:PackIcon Kind="Theme" />
-                        </Button>
-                        <Button ToolTip="Изменение языка" Background="#FFE86363" Foreground="#DDFFFFFF">
-                            <materialDesign:PackIcon Kind="Language" />
-                        </Button>
-                    </StackPanel>
-                </materialDesign:PopupBox>
-            </Grid>
-        </StackPanel>
-
-        <Grid Name="AddSetGrid" Visibility="Visible">
+        </Grid>
+        <Grid Name="AddSetGrid" Visibility="Hidden">
             <Frame x:Name="addFrame" Content="" HorizontalAlignment="Center" Height="297" Margin="186,83,186,0" VerticalAlignment="Top" Width="270" Background="#BFFFFFFF"/>
             <Label x:Name="label1" Content="Тема" HorizontalAlignment="Left" Margin="230,94,0,0" VerticalAlignment="Top" Width="45" FontFamily="Sitka Display" FontSize="16" Height="33"/>
             <TextBox x:Name="temaBox" HorizontalAlignment="Left" Height="33" Margin="283,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" FontFamily="Comic Sans MS" FontSize="14"/>
@@ -151,6 +98,8 @@
                 Сохранить
             </Button>
             <Label x:Name="label2_Copy" Content="Звуковое оповещение" HorizontalAlignment="Left" Margin="198,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+
+
         </Grid>
         <Grid Name="themesGrid" Visibility="Hidden">
 
