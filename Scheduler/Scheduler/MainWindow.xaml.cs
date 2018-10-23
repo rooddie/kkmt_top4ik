@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
+using System.Timers;
 namespace Scheduler
 {
     /// <summary>
@@ -23,7 +17,6 @@ namespace Scheduler
         public string file = "users.xml";
         public XmlDocument xDoc = new XmlDocument();
         public XmlElement xRoot;
-
         public string numXml = "";
         public string themeXml = "";
         public string textXml = "";
@@ -36,13 +29,15 @@ namespace Scheduler
 
         public int n = 0;
 
+
         public MainWindow()
         {
             InitializeComponent();
-
             createStyles();
             XmlRead();
             createPanel();
+            threadForDate();
+
         }
 
         private void XmlRead()
@@ -76,7 +71,7 @@ namespace Scheduler
         /// </createPanel>
         private void createPanel()
         {
-            for(int i = 0; i < Themes.Count; i++)
+            for (int i = 0; i < Themes.Count; i++)
             {
                 Expander expander = new Expander();
                 StackPanel stackPanel1 = new StackPanel();
@@ -84,11 +79,11 @@ namespace Scheduler
                 TextBlock textBlock_2 = new TextBlock();
 
                 textBlock_1.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
-                textBlock_1.Text = Themes[i].ToString();
+                textBlock_1.Text = DataTimes[i].ToString();
                 textBlock_1.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
                 textBlock_1.Foreground = new SolidColorBrush(Colors.White);
                 textBlock_1.Margin = new Thickness(0);
-                textBlock_1.Padding = new Thickness(20,10,20,10);
+                textBlock_1.Padding = new Thickness(20, 10, 20, 10);
 
                 textBlock_2.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
                 textBlock_2.Opacity = 68;
@@ -97,13 +92,13 @@ namespace Scheduler
                 textBlock_2.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
                 textBlock_2.Foreground = new SolidColorBrush(Colors.White);
                 textBlock_2.Margin = new Thickness(0);
-                textBlock_2.Padding = new Thickness(20,2,20,0);
+                textBlock_2.Padding = new Thickness(20, 2, 20, 0);
 
                 stackPanel1.Orientation = Orientation.Vertical;
                 stackPanel1.Margin = new Thickness(0);
 
                 expander.HorizontalAlignment = HorizontalAlignment.Stretch;
-                expander.Header = DataTimes[i].ToString();
+                expander.Header = Themes[i].ToString();
                 expander.Margin = new Thickness(5, 0, 5, 0);
                 expander.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
                 expander.Foreground = new SolidColorBrush(Colors.White);
@@ -113,7 +108,7 @@ namespace Scheduler
                 expander.Content = stackPanel1;
                 listPanel.Children.Add(expander);
             }
-          
+
         }
 
 
@@ -133,12 +128,16 @@ namespace Scheduler
             AddSetGrid.Visibility = Visibility.Hidden;
             themesGrid.Visibility = Visibility.Hidden;
             listPanel.Visibility = Visibility.Visible;
+            temaBox.Text = "";
+            textToEl.Text = null;
+            dataEl.Text = null;
+            timeEl.Text = null;
 
         }
 
         private void saveClick(object sender, RoutedEventArgs e)
         {
-            
+
 
             themeXml = temaBox.Text;
             textXml = new TextRange(textToEl.Document.ContentStart, textToEl.Document.ContentEnd).Text;
@@ -166,12 +165,12 @@ namespace Scheduler
                 Texts.Clear();
                 DataTimes.Clear();
             }
-        
+
 
 
         }
 
-       
+
         private void themes_Click(object sender, RoutedEventArgs e)
         {
             themesGrid.Visibility = Visibility.Visible;
@@ -183,7 +182,7 @@ namespace Scheduler
         }
 
 
-        void createStyles()
+        private void createStyles()
         {
             Button[,] listBut = new Button[3, 3];
             string[,] themesName = { { "Gradient", "Rain", "Relax" }, { "Sea", "Cat", "Nature" }, { "Girl", "Dark", "Fun" } };
@@ -222,32 +221,34 @@ namespace Scheduler
         }
 
 
-
-        void xmlAdd()
+        // Функция добавления записей в XML 
+        private void xmlAdd()
         {
             xDoc.Load(file);
             xRoot = xDoc.DocumentElement;
-            // создаем новый элемент user
+            //Создание нового элемента Striker с атрибутом Num
             XmlElement Element = xDoc.CreateElement("Stiker");
             XmlAttribute numEl = xDoc.CreateAttribute("Num");
 
+            //Создание остальных атрибутов
             XmlElement theme = xDoc.CreateElement("Theme");
             XmlElement text = xDoc.CreateElement("Content");
             XmlElement dataTime = xDoc.CreateElement("DataTime");
-            // создаем текстовые значения для элементов и атрибута
 
+            // создаем текстовые значения для элементов и атрибута
             XmlText numStick = xDoc.CreateTextNode("1");
             XmlText themeElem = xDoc.CreateTextNode(themeXml);
             XmlText content = xDoc.CreateTextNode(textXml);
             XmlText dataTimeElem = xDoc.CreateTextNode(datatimeXml);
 
             //добавляем узлы
-
+            //К атрибутам привязывыем строки, соответствующие созданной записи
             numEl.AppendChild(numStick);
             theme.AppendChild(themeElem);
             text.AppendChild(content);
             dataTime.AppendChild(dataTimeElem);
 
+            //К связь основного элемента с зависимыми
             Element.Attributes.Append(numEl);
             Element.AppendChild(theme);
             Element.AppendChild(text);
@@ -257,5 +258,26 @@ namespace Scheduler
             xDoc.Save("users.xml");
         }
 
+        //Функция поиска совпадения текущей даты и времени, с данными списка DataTimes
+        public void threadForDate()
+        {
+            System.Threading.Tasks.Task.Run(() =>
+            {
+              while (true)
+              {
+                  dateTimeNow.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+                  {
+                      dateTimeNow.Text = System.DateTime.Now.ToShortDateString() +" "+ System.DateTime.Now.ToString("HH:mm");
+                      
+                  }
+                  ));
+
+                  /*if (Themes.Contains(dateTimeNow.Text))
+                        MessageBox.Show("ТАМ ЧОТА ЕСТЬ");
+                  System.Threading.Thread.Sleep(1000);*/
+              }
+            });
+
+        }
     }
 }
