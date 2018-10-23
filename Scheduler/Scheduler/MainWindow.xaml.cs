@@ -132,7 +132,6 @@ namespace Scheduler
             textToEl.Text = null;
             dataEl.Text = null;
             timeEl.Text = null;
-
         }
 
         private void saveClick(object sender, RoutedEventArgs e)
