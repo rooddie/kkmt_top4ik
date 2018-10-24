@@ -40,7 +40,7 @@
         <Button x:Name="restartButton" Grid.ColumnSpan="2" Content="Restart" Grid.Column="7" HorizontalAlignment="Left" Margin="0,46,0,-28" Grid.Row="8" Width="75" Click="restartCkick"/>
         <Label x:Name="winGame" Content="Wictory" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="6" Width="223" Grid.Column="2" Margin="9.667,33,0,0" Grid.RowSpan="3" Height="63" FontFamily="Stencil" FontSize="48" Grid.Row="3"/>
         <Label x:Name="tLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="8" Margin="51.667,8,-95.333,0" Height="205" Grid.RowSpan="6" Width="85"/>
-        <Button Grid.ColumnSpan="4" Content="Проверить" HorizontalAlignment="Left" Width="124" Grid.Column="3" Margin="19.667,46,0,-28" Grid.Row="8" Click="Button_Click"/>
+       
 
     </Grid>
 </Window>

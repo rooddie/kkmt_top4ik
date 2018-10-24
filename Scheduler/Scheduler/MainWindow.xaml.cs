@@ -7,6 +7,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Timers;
+using System.Windows.Controls.Primitives;
+
 namespace Scheduler
 {
     /// <summary>
@@ -19,16 +21,19 @@ namespace Scheduler
         public XmlElement xRoot;
         public string numXml = "";
         public string themeXml = "";
-        public string textXml = "";
-        public string datatimeXml = "";
+        public string textXml = null;
+        public string datatimeXml = null;
 
-        List<string> Numbers = new List<string>();
-        List<string> Themes = new List<string>();
-        List<string> Texts = new List<string>();
-        List<string> DataTimes = new List<string>();
+        public static List<string> Numbers = new List<string>();
+        public static List<string> Themes = new List<string>();
+        public static List<string> Texts = new List<string>();
+        public static List<string> DataTimes = new List<string>();
 
         public int n = 0;
+        public static string timeNOW;
 
+
+        
 
         public MainWindow()
         {
@@ -37,12 +42,12 @@ namespace Scheduler
             XmlRead();
             createPanel();
             threadForDate();
-
+            //MessageBox.Show(DataTimes[0].ToString());
+          
         }
 
         private void XmlRead()
         {
-            int i = 0;
             XmlTextReader reader = new XmlTextReader(file);
             while (reader.Read())
             {
@@ -77,6 +82,7 @@ namespace Scheduler
                 StackPanel stackPanel1 = new StackPanel();
                 TextBlock textBlock_1 = new TextBlock();
                 TextBlock textBlock_2 = new TextBlock();
+                Button but = new Button();
 
                 textBlock_1.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
                 textBlock_1.Text = DataTimes[i].ToString();
@@ -105,6 +111,7 @@ namespace Scheduler
 
                 stackPanel1.Children.Add(textBlock_1);
                 stackPanel1.Children.Add(textBlock_2);
+                
                 expander.Content = stackPanel1;
                 listPanel.Children.Add(expander);
             }
@@ -136,11 +143,13 @@ namespace Scheduler
 
         private void saveClick(object sender, RoutedEventArgs e)
         {
-
+            Themes.Clear();
+            Texts.Clear();
+            DataTimes.Clear();
 
             themeXml = temaBox.Text;
             textXml = new TextRange(textToEl.Document.ContentStart, textToEl.Document.ContentEnd).Text;
-            datatimeXml = dataEl.Text + " " + timeEl.Text;
+            datatimeXml = dataEl.Text + " " + timeEl.Text + ":01";
 
             if (themeXml == "" || textXml == "" || datatimeXml == "" || dataEl.Text == null || timeEl.Text == null)
             {
@@ -154,15 +163,10 @@ namespace Scheduler
                 AddSetGrid.Visibility = Visibility.Hidden;
                 listPanel.Visibility = Visibility.Visible;
                 xmlAdd();
-
-
-
                 listPanel.Children.Clear();
                 XmlRead();
                 createPanel();
-                Themes.Clear();
-                Texts.Clear();
-                DataTimes.Clear();
+                
             }
 
 
@@ -264,19 +268,14 @@ namespace Scheduler
             {
               while (true)
               {
-                  dateTimeNow.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
-                  {
-                      dateTimeNow.Text = System.DateTime.Now.ToShortDateString() +" "+ System.DateTime.Now.ToString("HH:mm");
-                      
-                  }
-                  ));
-
-                  /*if (Themes.Contains(dateTimeNow.Text))
-                        MessageBox.Show("ТАМ ЧОТА ЕСТЬ");
-                  System.Threading.Thread.Sleep(1000);*/
+                      timeNOW = System.DateTime.Now.ToShortDateString() +" "+ System.DateTime.Now.ToString("HH:mm:ss");
+                    //MessageBox.Show(DataTimes[2].ToString());
+                    if (DataTimes.Contains(timeNOW))
+                          MessageBox.Show("Ку-ку");
+                      System.Threading.Thread.Sleep(1000);
               }
             });
-
         }
+
     }
 }

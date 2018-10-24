@@ -96,7 +96,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\8bit.wav" />
+    <Resource Include="Resources\8bit.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
@@ -108,7 +108,7 @@
     <None Include="Resources\ukranian.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ua.jpg" />
+    <Resource Include="Resources\ua.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

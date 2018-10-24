@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="375" Source="http://waland.ru/thumbs/flag_ukrainy-2979.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="375" Source="Resources/ua.jpg" Stretch="Fill"/>
         <Button x:Name="Button1" Content="1" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="84" Height="77" Click="Button1_Click" FontSize="48" FontFamily="Vijaya">
             <Button.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

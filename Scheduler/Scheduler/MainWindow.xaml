@@ -39,7 +39,7 @@
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="30*"/>
                     </Grid.ColumnDefinitions>
-
+                    
 
                     <Button x:Name="temesBut" Content="Темы" HorizontalAlignment="Left" Margin="82,31,-20,-12" VerticalAlignment="Top" Width="112" Height="19" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="White" FontFamily="Sitka Display" Click="themes_Click" Visibility="Hidden" Grid.Column="2"/>
                     <Button x:Name="languagesBut" Content="Язык" HorizontalAlignment="Left" Margin="82,60,-20,-41" VerticalAlignment="Top" Width="112" Height="19" BorderBrush="#FFE86363" Background="#FFE86363" Foreground="White" FontFamily="Sitka Display" Visibility="Hidden" Grid.Column="2"/>

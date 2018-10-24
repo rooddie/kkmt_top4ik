@@ -28,7 +28,7 @@ namespace WpfApp4
             InitializeComponent();
             //System.Drawing.Image myImg = Properties.Resources.ua;
 
-            SoundPlayer sp = new SoundPlayer("C:/Users/User/source/repos/WpfApp4/Audio/8bit.wav");
+            SoundPlayer sp = new SoundPlayer("Resources/8bit.wav");
             sp.Play();
 
             string[] data = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", " " };
