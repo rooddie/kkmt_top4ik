@@ -6,9 +6,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scheduler"
+        xmlns:C =" http://www.hardcodet.net/taskbar"
 
         mc:Ignorable="d"
-        Title="MainWindow" Height="471.625" Width="650">
+        Title="MainWindow" Height="471.625" Width="650" Closing="AppInTray">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,18 +20,28 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-
-
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid Name="mainGrid" Background="#FFC1DBEA">
+
         <Grid>
 
             <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,90,75,20">
-                <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA">
+                <Grid Width="541">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="66*"/>
+                        <ColumnDefinition Width="475*"/>
+                    </Grid.ColumnDefinitions>
 
-                </StackPanel>
+                    <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" Grid.Column="1">
+
+                    </StackPanel>
+                </Grid>
+
             </ScrollViewer>
+
+
             <StackPanel x:Name="UpLine" Background="#FF7378EC" Margin="0,0,0,370">
 
                 <Grid Height="60">
@@ -39,65 +50,63 @@
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="30*"/>
                     </Grid.ColumnDefinitions>
-                    
 
-                    <Button x:Name="temesBut" Content="Темы" HorizontalAlignment="Left" Margin="82,31,-20,-12" VerticalAlignment="Top" Width="112" Height="19" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="White" FontFamily="Sitka Display" Click="themes_Click" Visibility="Hidden" Grid.Column="2"/>
-                    <Button x:Name="languagesBut" Content="Язык" HorizontalAlignment="Left" Margin="82,60,-20,-41" VerticalAlignment="Top" Width="112" Height="19" BorderBrush="#FFE86363" Background="#FFE86363" Foreground="White" FontFamily="Sitka Display" Visibility="Hidden" Grid.Column="2"/>
-                    <Label x:Name="label" Content="Планировщик задач" Grid.Column="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="14" Foreground="#DDFFFFFF" />
-                    <Button x:Name="AddSetBut" Grid.Column="0" Content="+ Добавить задачу" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Click="addSet_Click" FontWeight="Normal" Background="#FFE86363"/>
-                    <Button x:Name="backBut" Content="Назад" HorizontalAlignment="Left" Margin="14" VerticalAlignment="Top" Width="74" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Background="#FFE86363" Click="backClick"  Visibility="Hidden"/>
-                    <materialDesign:PopupBox Grid.Column="2" Margin="103,4,0,9"
+
+                    <Label x:Name="projectName" Content="{DynamicResource projectName}" Grid.Column="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" Foreground="#DDFFFFFF" />
+                    <Button x:Name="AddSetBut" Grid.Column="0" Content="{DynamicResource addSetBut}" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Click="addSet_Click" FontWeight="Normal" Background="#FFE86363"/>
+                    <Button x:Name="backBut" Content="{DynamicResource backBut}" Grid.Column="0" HorizontalAlignment="Center" Margin="5,5,5,5" VerticalAlignment="Center" FontFamily="Sitka Display" Foreground="White" BorderBrush="#FFE86363" Background="#FFE86363" Click="backClick"  Visibility="Hidden"/>
+                    <materialDesign:PopupBox Grid.Column="2" Margin="103,4,0,9" Name="SettingBtn"
                   Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                   PlacementMode="BottomAndAlignCentres"
                   ToolTipService.Placement="Right"
-                  ToolTip="Настройки" Height="Auto" Width="47" Background="#FFE86363">
+                  ToolTip="{StaticResource settingBtn}" Height="Auto" Width="47" Background="#FFE86363">
                         <materialDesign:PopupBox.ToggleContent >
                             <materialDesign:PackIcon Kind="SettingsOutline" Height="28" Width="28" />
                         </materialDesign:PopupBox.ToggleContent>
                         <StackPanel>
-                            <Button ToolTip="Изменение темы" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
+                            <Button Name="themeBtn" ToolTip="{StaticResource themeBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
                                 <materialDesign:PackIcon Kind="Theme" />
                             </Button>
-                            <Button ToolTip="Изменение языка" Background="#FFE86363" Foreground="#DDFFFFFF">
+                            <Button Name="languagesBtn" ToolTip="{StaticResource languagesBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="languages_click">
                                 <materialDesign:PackIcon Kind="Language" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
             </StackPanel>
-            <TextBox x:Name="dateTimeNow" Text="" HorizontalAlignment="Left" Margin="407,20,0,0" VerticalAlignment="Top" Width="139"/>
 
         </Grid>
         <Grid Name="AddSetGrid" Visibility="Hidden">
             <Frame x:Name="addFrame" Content="" HorizontalAlignment="Center" Height="297" Margin="186,83,186,0" VerticalAlignment="Top" Width="270" Background="#BFFFFFFF"/>
-            <Label x:Name="label1" Content="Тема" HorizontalAlignment="Left" Margin="230,94,0,0" VerticalAlignment="Top" Width="45" FontFamily="Sitka Display" FontSize="16" Height="33"/>
+            <Label x:Name="themeIn" Content="{StaticResource themeIn}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="218,94,0,0" VerticalAlignment="Top" Width="61" FontFamily="Sitka Display" FontSize="16" Height="33"/>
             <TextBox x:Name="temaBox" HorizontalAlignment="Left" Height="33" Margin="283,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" FontFamily="Comic Sans MS" FontSize="14"/>
-            <Label x:Name="label2" Content="Описание" HorizontalAlignment="Left" Margin="198,127,0,0" VerticalAlignment="Top" Width="77" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+            <Label x:Name="opisanieIn" Content="{StaticResource opisanieIn}" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="193,127,0,0" VerticalAlignment="Top" Width="89" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
             <xctk:RichTextBox Name ="textToEl" Margin="283,132,210,210">
 
             </xctk:RichTextBox>
 
             <DatePicker Name="dataEl" HorizontalAlignment="Center"
-                  materialDesign:HintAssist.Hint="Выберите дату"
+                  materialDesign:HintAssist.Hint="{StaticResource dataEl}"
                   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="260,231,263,163" />
 
             <materialDesign:TimePicker Name="timeEl" HorizontalAlignment="Center"
-                  materialDesign:HintAssist.Hint="Выберите время"
+                  materialDesign:HintAssist.Hint="{StaticResource timeEl}"
                   Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                   Is24Hours="True"
                   Margin="258,299,259,0" Height="28" />
 
             <ToggleButton Name="Volume"
                   Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                  ToolTip="Default ToggleButton Style" Margin="367,329,210,67" />
+                  ToolTip="Default ToggleButton Style" Margin="357,329,220,67" />
 
             <Button Name="saveBut" Click="saveClick"
                 Style="{StaticResource MaterialDesignRaisedAccentButton}"
                 ToolTip="Resource name: MaterialDesignRaisedAccentButton"
-                materialDesign:RippleAssist.Feedback="#DD000000" Margin="243,391,233,10" FontFamily="Sitka Display" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="#DDFFFFFF" Height="Auto">
-                Сохранить
+                materialDesign:RippleAssist.Feedback="#DD000000" Margin="243,391,233,10" FontFamily="Sitka Display" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="#DDFFFFFF" Height="Auto"
+                Content="{StaticResource saveBut}">
+
             </Button>
-            <Label x:Name="label2_Copy" Content="Звуковое оповещение" HorizontalAlignment="Left" Margin="198,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+            <Label x:Name="volumeOn" Content="{StaticResource volumeOn}" HorizontalAlignment="Left" Margin="218,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
 
 
         </Grid>
@@ -115,9 +124,13 @@
                     <ColumnDefinition Width="120*"/>
                 </Grid.ColumnDefinitions>
 
-
             </Grid>
 
+        </Grid>
+        <Grid Name="LangGrid" Visibility="Hidden">
+            <ComboBox Name="menuLanguage" Margin="0,63,0,331" Background="#FF7378EC" Height="47" >
+
+            </ComboBox>
         </Grid>
 
     </Grid>

@@ -62,4 +62,6 @@ C:\Users\User\source\repos\Projects\Scheduler\Scheduler\bin\Debug\System.Xml.Rea
 C:\Users\User\source\repos\Projects\Scheduler\Scheduler\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb
 C:\Users\User\source\repos\Projects\Scheduler\Scheduler\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.xml
 C:\Users\User\source\repos\Projects\Scheduler\Scheduler\bin\Debug\System.Diagnostics.DiagnosticSource.xml
-C:\Users\User\source\repos\Projects\Scheduler\Scheduler\obj\Debug\Scheduler.exe.config
+C:\Users\User\source\repos\Projects\Scheduler\Scheduler\bin\Debug\System.Windows.Forms.Ribbon35.dll
+C:\Users\User\source\repos\Projects\Scheduler\Scheduler\obj\Debug\Resources\lang.ru-RU.baml
+C:\Users\User\source\repos\Projects\Scheduler\Scheduler\obj\Debug\Resources\lang.baml

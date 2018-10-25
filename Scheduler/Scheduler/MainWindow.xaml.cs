@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
-using System.Timers;
-using System.Windows.Controls.Primitives;
+
 
 namespace Scheduler
 {
@@ -32,8 +33,10 @@ namespace Scheduler
         public int n = 0;
         public static string timeNOW;
 
+        public static System.Windows.Forms.NotifyIcon notify = new System.Windows.Forms.NotifyIcon();
+        public bool statusApp = true;
+        public System.Windows.Forms.ContextMenu contextMenu1 = new System.Windows.Forms.ContextMenu();
 
-        
 
         public MainWindow()
         {
@@ -43,7 +46,48 @@ namespace Scheduler
             createPanel();
             threadForDate();
             //MessageBox.Show(DataTimes[0].ToString());
-          
+            Notifycation();
+            App.LanguageChanged += LanguageChanged;
+
+            CultureInfo currLang = App.Language;
+
+            //Заполняем меню смены языка:
+            menuLanguage.Items.Clear();
+            foreach (var lang in App.Languages)
+            {
+                MenuItem menuLang = new MenuItem();
+                menuLang.Header = lang.DisplayName;
+                menuLang.Tag = lang;
+                menuLang.IsChecked = lang.Equals(currLang);
+                menuLang.Click += ChangeLanguageClick;
+                menuLanguage.Items.Add(menuLang);
+            }
+
+        }
+        private void LanguageChanged(Object sender, EventArgs e)
+        {
+            CultureInfo currLang = App.Language;
+
+            //Отмечаем нужный пункт смены языка как выбранный язык
+            foreach (MenuItem i in menuLanguage.Items)
+            {
+                CultureInfo ci = i.Tag as CultureInfo;
+                i.IsChecked = ci != null && ci.Equals(currLang);
+            }
+        }
+
+        private void ChangeLanguageClick(Object sender, EventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+            if (mi != null)
+            {
+                CultureInfo lang = mi.Tag as CultureInfo;
+                if (lang != null)
+                {
+                    App.Language = lang;
+                }
+            }
+
         }
 
         private void XmlRead()
@@ -113,6 +157,7 @@ namespace Scheduler
                 stackPanel1.Children.Add(textBlock_2);
                 
                 expander.Content = stackPanel1;
+               
                 listPanel.Children.Add(expander);
             }
 
@@ -125,6 +170,7 @@ namespace Scheduler
             AddSetBut.Visibility = Visibility.Hidden;
             backBut.Visibility = Visibility.Visible;
             listPanel.Visibility = Visibility.Hidden;
+            LangGrid.Visibility = Visibility.Hidden;
 
         }
 
@@ -135,6 +181,7 @@ namespace Scheduler
             AddSetGrid.Visibility = Visibility.Hidden;
             themesGrid.Visibility = Visibility.Hidden;
             listPanel.Visibility = Visibility.Visible;
+            LangGrid.Visibility = Visibility.Hidden;
             temaBox.Text = "";
             textToEl.Text = null;
             dataEl.Text = null;
@@ -181,9 +228,15 @@ namespace Scheduler
             backBut.Visibility = Visibility.Visible;
             AddSetGrid.Visibility = Visibility.Hidden;
             listPanel.Visibility = Visibility.Hidden;
+            LangGrid.Visibility = Visibility.Hidden;
 
         }
-
+        private void languages_click(object sender, RoutedEventArgs e)
+        {
+            AddSetGrid.Visibility = Visibility.Hidden;
+            themesGrid.Visibility = Visibility.Hidden;
+            LangGrid.Visibility = Visibility.Visible;
+        }
 
         private void createStyles()
         {
@@ -271,11 +324,65 @@ namespace Scheduler
                       timeNOW = System.DateTime.Now.ToShortDateString() +" "+ System.DateTime.Now.ToString("HH:mm:ss");
                     //MessageBox.Show(DataTimes[2].ToString());
                     if (DataTimes.Contains(timeNOW))
-                          MessageBox.Show("Ку-ку");
-                      System.Threading.Thread.Sleep(1000);
+                    {
+                        notify.Visible = true;
+                        int index = DataTimes.IndexOf(timeNOW);
+                        notify.BalloonTipTitle = "Планировщик";
+                        notify.BalloonTipText = Themes[index] + "\n" + Texts[index];
+                        
+                        notify.ShowBalloonTip(10);
+                    }
+                    System.Threading.Thread.Sleep(1000);
               }
             });
         }
 
+        public void Notifycation()
+        {
+            notify.Icon = System.Drawing.SystemIcons.Error;
+            notify.Visible = false;
+            createMenu();
+            notify.DoubleClick += delegate(object sender, EventArgs args)
+            {
+                if (statusApp == false)
+                {
+                    notify.Visible = false;
+                    this.Show();
+                }
+
+            };
+           // notify.Click += close;
+            
+        }
+        private void AppInTray(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            notify.Visible = true;
+            e.Cancel = true;
+            statusApp = false;
+            notify.BalloonTipText = "Окно было свернуто";
+            notify.ShowBalloonTip(5);
+            this.Hide();
+        }
+
+        public void createMenu()
+        {
+            // Add menu items to shortcut menu.  
+            System.Windows.Forms.MenuItem open = new System.Windows.Forms.MenuItem();
+            open.Text = "Открыть";
+            open.Click += delegate
+            {
+                notify.Visible = false;
+                this.Show();
+            };
+            contextMenu1.MenuItems.Add(open);
+            System.Windows.Forms.MenuItem close = new System.Windows.Forms.MenuItem();
+            close.Text = "Закрыть";
+            close.Click += delegate
+            {
+                Environment.Exit(0);
+            };
+            contextMenu1.MenuItems.Add(close);
+            notify.ContextMenu = contextMenu1;
+        }
     }
 }
