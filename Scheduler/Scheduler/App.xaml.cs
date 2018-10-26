@@ -14,7 +14,8 @@ namespace Scheduler
     /// </summary>
     public partial class App : Application
     {
-        private static List<CultureInfo> m_Languages = new List<CultureInfo>();
+        public static List<CultureInfo> m_Languages = new List<CultureInfo>();
+        public static event EventHandler LanguageChanged;
 
         public static List<CultureInfo> Languages
         {
@@ -32,7 +33,7 @@ namespace Scheduler
             m_Languages.Add(new CultureInfo("ru-RU"));
             
         }
-        public static event EventHandler LanguageChanged;
+
 
         public static CultureInfo Language
         {
@@ -79,12 +80,12 @@ namespace Scheduler
                 LanguageChanged(Application.Current, new EventArgs());
             }
         }
-        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        public void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             Language = Scheduler.Properties.Settings.Default.DefaultLanguage;
         }
 
-        private void App_LanguageChanged(Object sender, EventArgs e)
+        public void App_LanguageChanged(Object sender, EventArgs e)
         {
             Scheduler.Properties.Settings.Default.DefaultLanguage = Language;
             Scheduler.Properties.Settings.Default.Save();

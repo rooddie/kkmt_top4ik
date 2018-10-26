@@ -8,7 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
-
+using System.Xml.XPath;
 
 namespace Scheduler
 {
@@ -53,6 +53,7 @@ namespace Scheduler
 
             //Заполняем меню смены языка:
             menuLanguage.Items.Clear();
+
             foreach (var lang in App.Languages)
             {
                 MenuItem menuLang = new MenuItem();
@@ -93,6 +94,7 @@ namespace Scheduler
         private void XmlRead()
         {
             XmlTextReader reader = new XmlTextReader(file);
+            
             while (reader.Read())
             {
                 if (reader.Name == "Stiker")
@@ -112,7 +114,9 @@ namespace Scheduler
                     DataTimes.Add(reader.ReadInnerXml().ToString());
 
                 }
+
             }
+            numXml = (n/2).ToString();
         }
 
         /// <createPanel>
@@ -126,6 +130,8 @@ namespace Scheduler
                 StackPanel stackPanel1 = new StackPanel();
                 TextBlock textBlock_1 = new TextBlock();
                 TextBlock textBlock_2 = new TextBlock();
+                Grid inExpander = new Grid();
+                TextBlock toHeadEx = new TextBlock();
                 Button but = new Button();
 
                 textBlock_1.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
@@ -144,11 +150,25 @@ namespace Scheduler
                 textBlock_2.Margin = new Thickness(0);
                 textBlock_2.Padding = new Thickness(20, 2, 20, 0);
 
+                toHeadEx.Text = Themes[i].ToString();
+                toHeadEx.Margin = new Thickness(50, 0, 0, 0);
+
+                but.Margin = new Thickness(-15,0,0,0);
+                but.HorizontalAlignment = HorizontalAlignment.Left;
+                but.Click += delegate
+                {
+                    xDoc.Load("users.xml");
+                    
+                };
+
+                inExpander.Children.Add(toHeadEx);
+                inExpander.Children.Add(but);
+
                 stackPanel1.Orientation = Orientation.Vertical;
                 stackPanel1.Margin = new Thickness(0);
 
                 expander.HorizontalAlignment = HorizontalAlignment.Stretch;
-                expander.Header = Themes[i].ToString();
+                expander.Header = inExpander;
                 expander.Margin = new Thickness(5, 0, 5, 0);
                 expander.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
                 expander.Foreground = new SolidColorBrush(Colors.White);
@@ -182,10 +202,6 @@ namespace Scheduler
             themesGrid.Visibility = Visibility.Hidden;
             listPanel.Visibility = Visibility.Visible;
             LangGrid.Visibility = Visibility.Hidden;
-            temaBox.Text = "";
-            textToEl.Text = null;
-            dataEl.Text = null;
-            timeEl.Text = null;
         }
 
         private void saveClick(object sender, RoutedEventArgs e)
@@ -197,7 +213,7 @@ namespace Scheduler
             themeXml = temaBox.Text;
             textXml = new TextRange(textToEl.Document.ContentStart, textToEl.Document.ContentEnd).Text;
             datatimeXml = dataEl.Text + " " + timeEl.Text + ":01";
-
+            
             if (themeXml == "" || textXml == "" || datatimeXml == "" || dataEl.Text == null || timeEl.Text == null)
             {
                 MessageBox.Show("Присутствуют незаполненные поля");
@@ -213,7 +229,10 @@ namespace Scheduler
                 listPanel.Children.Clear();
                 XmlRead();
                 createPanel();
-                
+                temaBox.Text = "";
+                textToEl.Text = null;
+                dataEl.Text = null;
+                timeEl.Text = null;
             }
 
 
@@ -292,7 +311,7 @@ namespace Scheduler
             XmlElement dataTime = xDoc.CreateElement("DataTime");
 
             // создаем текстовые значения для элементов и атрибута
-            XmlText numStick = xDoc.CreateTextNode("1");
+            XmlText numStick = xDoc.CreateTextNode(numXml);
             XmlText themeElem = xDoc.CreateTextNode(themeXml);
             XmlText content = xDoc.CreateTextNode(textXml);
             XmlText dataTimeElem = xDoc.CreateTextNode(datatimeXml);
@@ -309,7 +328,7 @@ namespace Scheduler
             Element.AppendChild(theme);
             Element.AppendChild(text);
             Element.AppendChild(dataTime);
-
+            n = 0;
             xRoot.AppendChild(Element);
             xDoc.Save("users.xml");
         }

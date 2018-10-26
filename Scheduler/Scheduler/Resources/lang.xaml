@@ -12,7 +12,7 @@
     <v:String x:Key="opisanieIn">Discription</v:String>
     <v:String x:Key="dataEl">Choose date</v:String>
     <v:String x:Key="timeEl">Choose time</v:String>
-    <v:String x:Key="volumeOn">Sound notification</v:String>
+    <v:String x:Key="volumeOn">Sound</v:String>
     <v:String x:Key="settingBtn">Setting</v:String>
     <v:String x:Key="saveBut">Save</v:String>
 

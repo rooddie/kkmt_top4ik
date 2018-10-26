@@ -28,17 +28,11 @@
         <Grid>
 
             <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,90,75,20">
-                <Grid Width="541">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="66*"/>
-                        <ColumnDefinition Width="475*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" Grid.Column="1">
-
-                    </StackPanel>
-                </Grid>
-
+         
+                <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" >
+                   
+                </StackPanel>
+               
             </ScrollViewer>
 
 
@@ -59,15 +53,15 @@
                   Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                   PlacementMode="BottomAndAlignCentres"
                   ToolTipService.Placement="Right"
-                  ToolTip="{StaticResource settingBtn}" Height="Auto" Width="47" Background="#FFE86363">
+                  ToolTip="{DynamicResource settingBtn}" Height="Auto" Width="47" Background="#FFE86363">
                         <materialDesign:PopupBox.ToggleContent >
                             <materialDesign:PackIcon Kind="SettingsOutline" Height="28" Width="28" />
                         </materialDesign:PopupBox.ToggleContent>
                         <StackPanel>
-                            <Button Name="themeBtn" ToolTip="{StaticResource themeBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
+                            <Button Name="themeBtn" ToolTip="{DynamicResource themeBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="themes_Click">
                                 <materialDesign:PackIcon Kind="Theme" />
                             </Button>
-                            <Button Name="languagesBtn" ToolTip="{StaticResource languagesBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="languages_click">
+                            <Button Name="languagesBtn" ToolTip="{DynamicResource languagesBtn}" Background="#FFE86363" Foreground="#DDFFFFFF" Click="languages_click">
                                 <materialDesign:PackIcon Kind="Language" />
                             </Button>
                         </StackPanel>
@@ -78,19 +72,19 @@
         </Grid>
         <Grid Name="AddSetGrid" Visibility="Hidden">
             <Frame x:Name="addFrame" Content="" HorizontalAlignment="Center" Height="297" Margin="186,83,186,0" VerticalAlignment="Top" Width="270" Background="#BFFFFFFF"/>
-            <Label x:Name="themeIn" Content="{StaticResource themeIn}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="218,94,0,0" VerticalAlignment="Top" Width="61" FontFamily="Sitka Display" FontSize="16" Height="33"/>
+            <Label x:Name="themeIn" Content="{DynamicResource themeIn}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="218,94,0,0" VerticalAlignment="Top" Width="61" FontFamily="Sitka Display" FontSize="16" Height="33"/>
             <TextBox x:Name="temaBox" HorizontalAlignment="Left" Height="33" Margin="283,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" FontFamily="Comic Sans MS" FontSize="14"/>
-            <Label x:Name="opisanieIn" Content="{StaticResource opisanieIn}" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="193,127,0,0" VerticalAlignment="Top" Width="89" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+            <Label x:Name="opisanieIn" Content="{DynamicResource opisanieIn}" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="193,127,0,0" VerticalAlignment="Top" Width="89" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
             <xctk:RichTextBox Name ="textToEl" Margin="283,132,210,210">
 
             </xctk:RichTextBox>
 
             <DatePicker Name="dataEl" HorizontalAlignment="Center"
-                  materialDesign:HintAssist.Hint="{StaticResource dataEl}"
+                  materialDesign:HintAssist.Hint="{DynamicResource dataEl}"
                   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="260,231,263,163" />
 
             <materialDesign:TimePicker Name="timeEl" HorizontalAlignment="Center"
-                  materialDesign:HintAssist.Hint="{StaticResource timeEl}"
+                  materialDesign:HintAssist.Hint="{DynamicResource timeEl}"
                   Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                   Is24Hours="True"
                   Margin="258,299,259,0" Height="28" />
@@ -103,10 +97,10 @@
                 Style="{StaticResource MaterialDesignRaisedAccentButton}"
                 ToolTip="Resource name: MaterialDesignRaisedAccentButton"
                 materialDesign:RippleAssist.Feedback="#DD000000" Margin="243,391,233,10" FontFamily="Sitka Display" Background="#FFE86363" BorderBrush="#FFE86363" Foreground="#DDFFFFFF" Height="Auto"
-                Content="{StaticResource saveBut}">
+                Content="{DynamicResource saveBut}">
 
             </Button>
-            <Label x:Name="volumeOn" Content="{StaticResource volumeOn}" HorizontalAlignment="Left" Margin="218,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+            <Label x:Name="volumeOn" Content="{DynamicResource volumeOn}" HorizontalAlignment="Left" Margin="218,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
 
 
         </Grid>
