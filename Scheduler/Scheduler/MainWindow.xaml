@@ -28,11 +28,11 @@
         <Grid>
 
             <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,90,75,20">
-         
+
                 <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" >
-                   
+
                 </StackPanel>
-               
+
             </ScrollViewer>
 
 
@@ -121,10 +121,8 @@
             </Grid>
 
         </Grid>
-        <Grid Name="LangGrid" Visibility="Hidden">
-            <ComboBox Name="menuLanguage" Margin="0,63,0,331" Background="#FF7378EC" Height="47" >
-
-            </ComboBox>
+        <Grid Name="LangGrid" Visibility="Hidden" Margin="0,71,0,0">
+            <ListBox Name="menuLanguage" Margin="239,-8,238,262"  Background="#FF7378EC" HorizontalAlignment="Center" Width="165" HorizontalContentAlignment="Left" />
         </Grid>
 
     </Grid>

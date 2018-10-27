@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
-using System.Xml.XPath;
+
 
 namespace Scheduler
 {
@@ -17,25 +17,28 @@ namespace Scheduler
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string file = "users.xml";
-        public XmlDocument xDoc = new XmlDocument();
-        public XmlElement xRoot;
+        public string file = "users.xml";//xml файл
+        public XmlDocument xDoc = new XmlDocument();//переменная для работы с xml документом
+        public XmlElement xRoot;//Получает основной элемент xml,  относительно которого производятся записи
+
+        //Переменные, данные к которым присваиваются при создании задачи, для передачи в xml
         public string numXml = "";
         public string themeXml = "";
         public string textXml = null;
         public string datatimeXml = null;
 
+        //Списки, формирующиеся при считывании xml файла, необходимы для созданя задач на экране
         public static List<string> Numbers = new List<string>();
         public static List<string> Themes = new List<string>();
         public static List<string> Texts = new List<string>();
         public static List<string> DataTimes = new List<string>();
 
-        public int n = 0;
-        public static string timeNOW;
+        public int num = 0;//Кол-во "Stiker" в xml 
+        public static string timeNOW;//Текущее дата и время компьютера
 
-        public static System.Windows.Forms.NotifyIcon notify = new System.Windows.Forms.NotifyIcon();
-        public bool statusApp = true;
-        public System.Windows.Forms.ContextMenu contextMenu1 = new System.Windows.Forms.ContextMenu();
+        public static System.Windows.Forms.NotifyIcon notify = new System.Windows.Forms.NotifyIcon();//Иконка свернутого в трей приложения
+        public bool statusApp = true;//Статус приложения(открыто/свернуто)
+        public System.Windows.Forms.ContextMenu contextMenu1 = new System.Windows.Forms.ContextMenu();//Контекстное меню при нажатии пкм по иконке в трее
 
 
         public MainWindow()
@@ -45,26 +48,36 @@ namespace Scheduler
             XmlRead();
             createPanel();
             threadForDate();
-            //MessageBox.Show(DataTimes[0].ToString());
             Notifycation();
-            App.LanguageChanged += LanguageChanged;
 
-            CultureInfo currLang = App.Language;
+            App.LanguageChanged += LanguageChanged;//кол-во языков в программе
 
-            //Заполняем меню смены языка:
-            menuLanguage.Items.Clear();
+            CultureInfo currLang = App.Language;//Перевод приложения
 
+          
+            menuLanguage.Items.Clear();  //Отчистка меню смены языка:
+
+            //Заполнение lixtbox с языками
             foreach (var lang in App.Languages)
             {
                 MenuItem menuLang = new MenuItem();
+              
+                menuLang.Margin = new Thickness(0, 0, -120, 0);
+               
                 menuLang.Header = lang.DisplayName;
-                menuLang.Tag = lang;
-                menuLang.IsChecked = lang.Equals(currLang);
+                menuLang.Tag = lang; //Хранение выбранного языка
+                menuLang.IsChecked = lang.Equals(currLang); //Проверка на тот же язык
                 menuLang.Click += ChangeLanguageClick;
-                menuLanguage.Items.Add(menuLang);
+                menuLanguage.Items.Add(menuLang);//Добавление языка в листбокс
             }
 
         }
+
+        /// <summary>
+        /// Функция обработки события LanguageChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LanguageChanged(Object sender, EventArgs e)
         {
             CultureInfo currLang = App.Language;
@@ -77,6 +90,11 @@ namespace Scheduler
             }
         }
 
+        /// <summary>
+        /// Функция смены языка
+        /// </summary>
+        /// <param name="sender"> объект, на который кликнули</param>
+        /// <param name="e">событие</param>
         private void ChangeLanguageClick(Object sender, EventArgs e)
         {
             MenuItem mi = sender as MenuItem;
@@ -88,17 +106,22 @@ namespace Scheduler
                     App.Language = lang;
                 }
             }
+            LangGrid.Visibility = Visibility.Hidden; //После выбора языка, меня скрывается
 
         }
 
+        /// <summary>
+        /// Функция чтения xml файла
+        /// </summary>
         private void XmlRead()
         {
-            XmlTextReader reader = new XmlTextReader(file);
+            XmlTextReader reader = new XmlTextReader(file); //Считываемый файл
             
+            //Поиск узлов по названиям и запись их в массивы
             while (reader.Read())
             {
                 if (reader.Name == "Stiker")
-                    n++;
+                    num++;
                 if (reader.Name == "Theme")
                 {
                     Themes.Add(reader.ReadInnerXml().ToString());
@@ -116,7 +139,7 @@ namespace Scheduler
                 }
 
             }
-            numXml = (n/2).ToString();
+            numXml = (num / 2).ToString();//т.к считывается еще и закрывающий объект
         }
 
         /// <createPanel>
@@ -126,29 +149,31 @@ namespace Scheduler
         {
             for (int i = 0; i < Themes.Count; i++)
             {
-                Expander expander = new Expander();
-                StackPanel stackPanel1 = new StackPanel();
-                TextBlock textBlock_1 = new TextBlock();
-                TextBlock textBlock_2 = new TextBlock();
-                Grid inExpander = new Grid();
-                TextBlock toHeadEx = new TextBlock();
-                Button but = new Button();
+                Expander expander = new Expander(); //экспандер, на котором все элементы и будут расположены
+                StackPanel stackPanel1 = new StackPanel();//Выезжающее меню
+                TextBlock dataTime_tb = new TextBlock();//Дата и время на панели
+                TextBlock text_tb = new TextBlock();//Содержание на панели
+                Grid inExpander = new Grid();//грид, для размещения кнопки и темы
+                TextBlock toHeadEx = new TextBlock();//Тема на панели
+                Button but = new Button();//Кнопка удаления записи
 
-                textBlock_1.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
-                textBlock_1.Text = DataTimes[i].ToString();
-                textBlock_1.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
-                textBlock_1.Foreground = new SolidColorBrush(Colors.White);
-                textBlock_1.Margin = new Thickness(0);
-                textBlock_1.Padding = new Thickness(20, 10, 20, 10);
+                //Настройка вида даты и время на панели
 
-                textBlock_2.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
-                textBlock_2.Opacity = 68;
-                textBlock_2.Text = Texts[i].ToString();
-                textBlock_2.TextWrapping = TextWrapping.Wrap;
-                textBlock_2.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
-                textBlock_2.Foreground = new SolidColorBrush(Colors.White);
-                textBlock_2.Margin = new Thickness(0);
-                textBlock_2.Padding = new Thickness(20, 2, 20, 0);
+                dataTime_tb.Style = Application.Current.FindResource("MaterialDesignBody") as Style; //Стиль даты/время
+                dataTime_tb.Text = DataTimes[i].ToString();
+                dataTime_tb.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                dataTime_tb.Foreground = new SolidColorBrush(Colors.White);
+                dataTime_tb.Margin = new Thickness(0);
+                dataTime_tb.Padding = new Thickness(20, 10, 20, 10);
+
+                text_tb.Style = Application.Current.FindResource("MaterialDesignBody") as Style;
+                text_tb.Opacity = 68;
+                text_tb.Text = Texts[i].ToString();
+                text_tb.TextWrapping = TextWrapping.Wrap;
+                text_tb.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                text_tb.Foreground = new SolidColorBrush(Colors.White);
+                text_tb.Margin = new Thickness(0);
+                text_tb.Padding = new Thickness(20, 2, 20, 0);
 
                 toHeadEx.Text = Themes[i].ToString();
                 toHeadEx.Margin = new Thickness(50, 0, 0, 0);
@@ -157,8 +182,10 @@ namespace Scheduler
                 but.HorizontalAlignment = HorizontalAlignment.Left;
                 but.Click += delegate
                 {
-                    xDoc.Load("users.xml");
-                    
+                    xDoc.Load(file);
+
+
+                    xDoc.Save(file);
                 };
 
                 inExpander.Children.Add(toHeadEx);
@@ -173,8 +200,8 @@ namespace Scheduler
                 expander.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
                 expander.Foreground = new SolidColorBrush(Colors.White);
 
-                stackPanel1.Children.Add(textBlock_1);
-                stackPanel1.Children.Add(textBlock_2);
+                stackPanel1.Children.Add(dataTime_tb);
+                stackPanel1.Children.Add(text_tb);
                 
                 expander.Content = stackPanel1;
                
@@ -328,7 +355,7 @@ namespace Scheduler
             Element.AppendChild(theme);
             Element.AppendChild(text);
             Element.AppendChild(dataTime);
-            n = 0;
+            num = 0;
             xRoot.AppendChild(Element);
             xDoc.Save("users.xml");
         }
