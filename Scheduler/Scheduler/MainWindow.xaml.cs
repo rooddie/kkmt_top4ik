@@ -67,7 +67,6 @@ namespace Scheduler
                 menuLang.Click += ChangeLanguageClick;
                 menuLanguage.Items.Add(menuLang);//Добавление языка в листбокс
             }
-
         }
 
         /// <summary>
