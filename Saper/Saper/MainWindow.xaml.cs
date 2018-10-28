@@ -107,7 +107,6 @@ namespace Saper
                 (sender as Button).IsEnabled = false;
                 winGame();//Конец игры, сработает при открытии всех ячеек
             }
-
         }
 
         /// <summary>
