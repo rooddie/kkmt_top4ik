@@ -22,7 +22,11 @@ namespace kalk1
         {
             InitializeComponent();
         }
-        //Добавление цифр в лейбл от 0 до 9
+        /// <summary>
+        /// Добавление цифр в лейбл от 0 до 9
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content += "1";
@@ -73,7 +77,11 @@ namespace kalk1
             answLabel.Content += "0";
         }
 
-        // Считает корень числа, при условии что в строке только число, без действий
+        /// <summary>
+        /// // Считает корень числа, при условии что в строке только число, без действий
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void korenButton_Click(object sender, RoutedEventArgs e)
         {
            
@@ -85,7 +93,11 @@ namespace kalk1
 
         }
 
-        //Добавление арифметических знаков в лейбл
+        /// <summary>
+        /// Добавление арифметических знаков в лейбл
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void plusButton_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content += "+";
@@ -106,26 +118,38 @@ namespace kalk1
             answLabel.Content += "/";
         }
 
-        //Очистка лейбла
+        /// <summary>
+        ///Очистка лейбла
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
             answLabel.Content = "";
         }
-        //Точка(Вещественное число)
+        /// <summary>
+        /// Добавление в лейбл Точки(Вещественное число)
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void dotAdd(object sender, RoutedEventArgs e)
         {
             answLabel.Content += ",";
         }
 
-        //Функция рассчета данных в лейбле
+        /// <summary>
+        /// Функция рассчета данных в лейбле
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void answButton_Click(object sender, RoutedEventArgs e)
         {
-            string st = Convert.ToString(answLabel.Content);
+            string st = Convert.ToString(answLabel.Content);//Строка
             //Строка разделяется на 2 числа и действие между ними
-            string ch1 = ""; 
-            string ch2 = "";
-            string deistv = "";
-            int stLen = st.Length;
+            string ch1 = ""; //Первое число
+            string ch2 = "";//Второе число
+            string deistv = "";//Действие между числами
+ 
             //Если знак действия последний или его впринципе нет, то кнопка равно не сработает
             if (st[st.Length - 1] != '*' || st[st.Length - 1] != '/' || st[st.Length - 1] != '+' || st[st.Length - 1] != '-' 
                 && st.Contains('*') == true || st.Contains('/') == true || st.Contains('+') == true || st.Contains('+') == true)
@@ -148,8 +172,8 @@ namespace kalk1
                         chh2 += ch2[i];
                     }
                     
-                    double result1 = 0.0;
-                    double result2 = 0.0;
+                    double result1 = 0.0;//Первое число
+                    double result2 = 0.0;//Второе число
                     if (deistv == "*")
                     {
                         result1 = Convert.ToDouble(ch1);
@@ -174,8 +198,6 @@ namespace kalk1
                         result2 = Convert.ToDouble(chh2);
                         answLabel.Content = Convert.ToString(result2 - result1);
                     }
-
-
 
             }
 
