@@ -22,18 +22,23 @@ namespace Saper
     public partial class MainWindow : Window
     {
         public int amountElem = 10;//Кол-во элементов в сетке;
-        public int[,] sapperMas;
+        public int[,] sapperMas;//Массив поля сапера
 
         //i,j элементы массива создаваемого сапера, для передачи к элементу сетки
         public int i = 0;
         public int j = 0;
+
         public Button[,] listBut;//Массив кнопок
 
-        public int rowAmount;
-        public int colAmount;
+        public int rowAmount;//Кол-во строк
+        public int colAmount;//кол-во столбцов
 
-        public int countNumbers = 0;
-        public int countNumbersNow = 0;
+        public int countNumbers = 0;//Кол-во ячеек с цифрами
+        public int countNumbersNow = 0;//Кол-во ячеек с цифрами, выключенных на текущий момент
+
+        /// <summary>
+        /// Старт программы
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -66,11 +71,11 @@ namespace Saper
                 hardLevel.Visibility = Visibility.Hidden;
                 ComplexityL.Visibility = Visibility.Hidden;
 
-                mediaElement.Source = new Uri("Resources/boom.gif", UriKind.Relative);
-
-                mediaElement.LoadedBehavior = MediaState.Manual;
+                //Отображенние гифки в медиаЭлементе при клике на бомбу
+                mediaElement.Source = new Uri("Resources/boom.gif", UriKind.Relative);//Гифка со взрывом
+                mediaElement.LoadedBehavior = MediaState.Manual;//Авто запуск
                 mediaElement.UnloadedBehavior = MediaState.Manual;
-                mediaElement.Position = TimeSpan.FromMilliseconds(1);
+                mediaElement.Position = TimeSpan.FromMilliseconds(1);//Зацикливание
                 mediaElement.Play();
 
                 loseGame.Visibility = Visibility.Visible;//Отображает сообщение о конце игры
@@ -78,12 +83,13 @@ namespace Saper
                 //Выравнивание надписи конец игры, в зависимости от размера окна
               
             }
-            //При нажатии на пустую клетку, запускается функция, открывающие соседние пустые клетки
+            //При нажатии на пустую клетку, запускается функция, открывающая соседние пустые клетки
             if ((sender as Button).Content.ToString() == 0.ToString())
             {
                 open(row + 1, col + 1);
             }
 
+            //При клике на цифру, окрашивает ее и выключает
             if ((sender as Button).Content.ToString() != "9")
             {
                 if ((sender as Button).Content.ToString() == "1")
@@ -99,12 +105,16 @@ namespace Saper
                 if ((sender as Button).Content.ToString() == "6")
                     (sender as Button).Foreground = new SolidColorBrush(Colors.Khaki);
                 (sender as Button).IsEnabled = false;
-                winGame();
+                winGame();//Конец игры, сработает при открытии всех ячеек
             }
 
         }
 
-        //Создание поля судоку, передаются границы массивов
+        /// <summary>
+        /// Создание поля судоку, передаются границы массивов
+        /// </summary>
+        /// <param name="row">Кол-во строк</param>
+        /// <param name="col">Кол-во столбцов</param>
         public void createSupper(int row, int col)
         {
             sapperMas = new int[row, col];
@@ -134,7 +144,7 @@ namespace Saper
                         sapperMas[i, j] = 0;
                 }
             }
-            int k = 0;//Кол-во мин, около текущей клетки
+            int k = 0;//Кол-во мин, вокруг текущей клетки
             for (int i = 1; i < row - 1; i++)
             {
                 for (int j = 1; j < col - 1; j++)
@@ -188,9 +198,13 @@ namespace Saper
 
             countNumInMas(row, col);//Подсчет кол-ва бомб
         }
-        //Функция динамического создания и добавления столбцов к сетке, аналогично со строками
+        /// <summary>
+        /// Функция динамического создания и добавления ячеек сетки
+        /// </summary>
+        /// <param name="amountRows">Размер поля</param>
         public void gridAddRows(int amountRows)
         {
+            //Очистка сетки
             saperGrid.Children.Clear();
             saperGrid.RowDefinitions.Clear();
             saperGrid.ColumnDefinitions.Clear();
@@ -210,13 +224,17 @@ namespace Saper
                 col.Width = new GridLength(1.0, GridUnitType.Star);
                 col.Width = (GridLength)converter.ConvertFromString("*");
 
-                saperGrid.RowDefinitions.Add(row);//Добавление столбца к сетке
+                saperGrid.RowDefinitions.Add(row);//Добавление строки к сетке
 
-                saperGrid.ColumnDefinitions.Add(col);
+                saperGrid.ColumnDefinitions.Add(col);//Добавление столбца к сетке
             }
         }
 
-        //Заполнение сетки элементами, передается кол-во строк и столбцов
+        /// <summary>
+        /// Заполнение сетки элементами
+        /// </summary>
+        /// <param name="amountElem_I">Кол-во строк</param>
+        /// <param name="amountElem_J">Кол=во столбцов</param>
         public void gridAddElements(int amountElem_I, int amountElem_J)
         {
             
@@ -237,14 +255,17 @@ namespace Saper
                 }
         }
 
-
-        // Рукурсивная функция Открывает пустые клетки, принимает текущую позицию в массиве
+        /// <summary>
+        /// Рукурсивная функция Открывает пустые клетки
+        /// </summary>
+        /// <param name="row">Строка</param>
+        /// <param name="col">Столбец</param>
         private void open(int row, int col)
         {
             if (sapperMas[row, col] == 0)
             {
 
-                sapperMas[row, col] = 100; //Для проверки на завершение рекурсии
+                sapperMas[row, col] = 100; //пустой элемент временно приравнивается 100, для проверки на завершение рекурсии
 
                 listBut[row, col].Content = "";
                 listBut[row, col].IsEnabled = false;//отключить пустую кнопку
@@ -262,8 +283,8 @@ namespace Saper
                 {
                     // отобразить содержимое клетки
                     listBut[row, col].Content = (sapperMas[row, col]).ToString();
-                    listBut[row, col].IsEnabled = false;
-                    
+                    listBut[row, col].IsEnabled = false;//Выключение кнопки
+                    //Покраска цифр в кнопках
                     if (listBut[row, col].Content.ToString() == "1")
                         listBut[row, col].Foreground = new SolidColorBrush(Colors.Blue);
                     if (listBut[row, col].Content.ToString() == "2")
@@ -280,7 +301,11 @@ namespace Saper
             }
         }
 
-        //Функция создания поля, легкого уровня сложности
+        /// <summary>
+        /// Функция создания поля, легкого уровня сложности
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         public void easyLevel_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Visibility = Visibility.Visible;
@@ -288,12 +313,16 @@ namespace Saper
             countNumbersNow = 0;
             colAmount = 12;
             rowAmount = 12;
-            gridAddRows(10);
+            gridAddRows(10); //Сетка 10х10
             createSupper(amountElem + 2, amountElem + 2);
             gridAddElements(amountElem + 1, amountElem + 1);
         }
 
-        //Функция создания поля, среднего уровня сложности
+        /// <summary>
+        /// Функция создания поля, среднего уровня сложности
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         public void normalLevel_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Visibility = Visibility.Visible;
@@ -306,7 +335,11 @@ namespace Saper
             gridAddElements(amountElem + 6, amountElem + 6);
         }
 
-        //Функция создания поля, сложного уровня сложности
+        /// <summary>
+        /// Функция создания поля, тяжелого уровня сложности
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         public void hardlLevel_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Visibility = Visibility.Visible;
@@ -319,7 +352,11 @@ namespace Saper
             gridAddElements(amountElem + 11, amountElem + 11);
         }
 
-        //Поиск ячеек с цифрами в массиве
+        /// <summary>
+        /// Поиск ячеек с цифрами в массиве
+        /// </summary>
+        /// <param name="row">Кол-во строк</param>
+        /// <param name="col">Кол-во столбцов</param>
         public void countNumInMas(int row, int col)
         {
             for(int i = 1; i < row - 1; i++)
@@ -332,10 +369,10 @@ namespace Saper
                 }
         }
 
-        /*
-        Функция проверки на победу в игре
-        Считает кол-во выключенных кнопок и сравнивает с кол-вом бомб в массиве
-        */
+        /// <summary>
+        ///Функция проверки на победу в игре
+        ///Считает кол-во выключенных кнопок и сравнивает с кол-вом бомб в массиве
+        /// </summary>
         public void winGame()
         {
             for (int i = 1; i < colAmount - 1; i++)
@@ -354,30 +391,34 @@ namespace Saper
                             listBut[i, j].Visibility = Visibility.Hidden;//Скрывает все кнопки
                         }
 
+                    //Отображение главного меню
                     nameGame.Visibility = Visibility.Visible;
                     easyLevel.Visibility = Visibility.Visible;
                     normalLevel.Visibility = Visibility.Visible;
                     hardLevel.Visibility = Visibility.Visible;
                     ComplexityL.Visibility = Visibility.Visible;
-                    menuButton.Visibility = Visibility.Visible;
                     menuButton.Visibility = Visibility.Hidden;
 
                 }
             }
         }
-        //Функция клика на кнопку Меню
-        //Скрывает все элементы, отобразившиеся при поражении
-        //Отображает элементы меню
+        /// <summary>
+        /// Функция клика на кнопку Меню
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void menuButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //Отображает элементы меню
             nameGame.Visibility = Visibility.Visible;
             easyLevel.Visibility = Visibility.Visible;
             normalLevel.Visibility = Visibility.Visible;
             hardLevel.Visibility = Visibility.Visible;
             ComplexityL.Visibility = Visibility.Visible;
 
-            loseGame.Visibility = Visibility.Hidden;//Отображает сообщение о конце игры
+            //Скрывает все элементы, отобразившиеся при поражении
+            loseGame.Visibility = Visibility.Hidden;
             menuButton.Visibility = Visibility.Hidden;
             mediaElement.Visibility = Visibility.Hidden;
         }
