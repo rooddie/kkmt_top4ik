@@ -25,10 +25,15 @@ namespace kalkulator2
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Клик на кнопку
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие </param>
         private void answButton_Click(object sender, RoutedEventArgs e)
         {
-            string stroka = dataStr.Text + " ";
-            string chisla = "";
+            string stroka = dataStr.Text + " ";//Получение данных из textBox
+            string chisla = "";//Строка с числами
             List<string> masData = new List<string>(); // массив данных их строки
             string deistv = ""; // переменная для действия между числами
            
@@ -39,7 +44,7 @@ namespace kalkulator2
             {
                 if (stroka[i] == '*' || stroka[i] == '/' || stroka[i] == '+' || stroka[i] == '-' || stroka[i] == ' ')
                 {
-                    masData.Add(Convert.ToString(chisla));
+                    masData.Add(Convert.ToString(chisla));//Запись в массив
                     deistv = Convert.ToString(stroka[i]);
                     masData.Add(deistv);
                     chisla = "";
@@ -59,12 +64,14 @@ namespace kalkulator2
                 //Сначала проверяется наличие умножения и деления, для их рассчета в приоритете
                 if (masData.Contains("*") == true || masData.Contains("/") == true)
                 {
-                    if (masData[k] == "*")
+                    if (masData[k] == "*") //ВЫполнить соотвествующее действие 
                     {
-                        masData[k - 1] = Convert.ToString(Convert.ToDouble(masData[k - 1]) * Convert.ToDouble(masData[k + 1]));
+                        masData[k - 1] = Convert.ToString(Convert.ToDouble(masData[k - 1]) * Convert.ToDouble(masData[k + 1]));//предыдущий элемент равен результату
+                        //Удаление двух прочих элементов
                         masData.RemoveAt(k + 1);
                         masData.RemoveAt(k);
-                        k = 0;
+
+                        k = 0;//ЗАпуск цикла заного
                         label.Content = Convert.ToString(masData[0]);
 
                     }
