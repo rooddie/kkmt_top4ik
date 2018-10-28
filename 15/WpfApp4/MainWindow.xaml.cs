@@ -23,40 +23,40 @@ namespace WpfApp4
     {
         int st = 1; /// Счетчик шагов
 
+        /// <summary>
+        /// Старт игры
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            //System.Drawing.Image myImg = Properties.Resources.ua;
 
+            //Музыка на фоне
             SoundPlayer sp = new SoundPlayer("Resources/8bit.wav");
             sp.Play();
 
+            //массив пятнашек
             string[] data = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", " " };
-            /*
-                 Перемешивание массива 
-            */
+
+            //Перемешивание массива 
             var random = new Random(DateTime.Now.Millisecond);
             data = data.OrderBy(x => random.Next()).ToArray();
             
-            /*
-                Кнопки скрыты, пока не будет нажата кнопка "Начать"   
-             */
+
+            //Кнопки скрыты, пока не будет нажата кнопка "Начать"   
             for (int i = 0; i< data.Length;i++)
             {
                 Button ButHide = (Button)this.FindName("Button" + Convert.ToString(i + 1));
                 ButHide.Visibility = Visibility.Hidden;
             }
             
-            ///Все объекты скрыты, пока не будет нажата кнопка старт
+            //Все объекты скрыты, пока не будет нажата кнопка старт
             label.Visibility = Visibility.Hidden;
             kolvo.Visibility = Visibility.Hidden;
             label1.Visibility = Visibility.Hidden;
 
-            ButVis(data);
+            ButVis(data);//Пустая ячейка
 
-            /*
-             Запись в кнопки перемешаного массива
-             */
+            // Запись в кнопки перемешаного массивa
             for (int i = 0; i < data.Length; i++)
             {
                 Button btn = (Button)this.FindName("Button" + Convert.ToString(i + 1));
@@ -65,15 +65,19 @@ namespace WpfApp4
             
         }
         
-        /*
-         Свап пустой ячейки, с нумерованной
-         */
+        /// <summary>
+        /// Свап ячеек
+        /// </summary>
+        /// <param name="a">Кнопка1</param>
+        /// <param name="b">Кнопка2</param>
         public void swap(Button a, Button b) 
         {
             string temp;
             temp = Convert.ToString(a.Content);
             a.Content = Convert.ToString(b.Content);
             b.Content = Convert.ToString(temp);
+
+            //Если кнопка пустая то скрыть ее
             if (Convert.ToString(a.Content) == " ")
             {
                 a.Visibility = Visibility.Hidden;
@@ -86,9 +90,11 @@ namespace WpfApp4
             else b.Visibility = Visibility.Visible;
         }
 
-        /*
-         Описание всей логики сдвигов кнопок
-         */
+        /// <summary>
+        /// Сдвиги ячеек для каждой из 16ти кнопок
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
             if (Convert.ToString(Button2.Content) == " ")
@@ -616,9 +622,10 @@ namespace WpfApp4
             label1.Content = Convert.ToString(st++);;
         }
 
-        /*
-         Функция делает невидимой пустой кнопку по индексу пустой ячейки
-         */
+        /// <summary>
+        /// Функция скрывает пустую кнопку
+        /// </summary>
+        /// <param name="data">Массив контента кнопок</param>
         private void ButVis(string[] data)
         {
             int num = Array.IndexOf(data, " ") - 1;
@@ -626,9 +633,9 @@ namespace WpfApp4
             button.Visibility = Visibility.Hidden;
         }
 
-        /*
-         Функция поиска пустой кнопки среди всех кнопок
-         */
+        /// <summary>
+        /// Поиск пустой кнопки и ее скрытие
+        /// </summary>
         private void SearchZ()
         {
 
@@ -643,9 +650,13 @@ namespace WpfApp4
             
 
         }
-        /*
-         Запуск игры, отображение основных элементов
-         */
+
+        /// <summary>
+        /// Клик по кнопке старт
+        /// Отображает поле кнопок
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Click_Start(object sender, RoutedEventArgs e)
         {
 
