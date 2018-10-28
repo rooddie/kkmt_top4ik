@@ -151,24 +151,39 @@ namespace Scheduler.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete1 {
+            get {
+                object obj = ResourceManager.GetObject("delete1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Sound {
+            get {
+                return ResourceManager.GetStream("Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;users&gt;
-        ///  &lt;Stiker Num=&quot;1&quot;&gt;
-        ///    &lt;Theme&gt;Мусор&lt;/Theme&gt;
-        ///    &lt;Content&gt;Вынеси мусор ебанаротблять&lt;/Content&gt;
-        ///    &lt;DataTime&gt;30.05.19 12:44:55&lt;/DataTime&gt;
-        ///  &lt;/Stiker&gt;
-        ///  &lt;Stiker Num=&quot;1&quot;&gt;
-        ///    &lt;Theme&gt;Мусор&lt;/Theme&gt;
-        ///    &lt;Content&gt;Вынеси мусор ебанаротблять&lt;/Content&gt;
-        ///    &lt;DataTime&gt;30.05.19 12:44:55&lt;/DataTime&gt;
-        ///  &lt;/Stiker&gt;
-        ///  &lt;Stiker Num=&quot;1&quot;&gt;
-        ///    &lt;Theme&gt;Мусор&lt;/Theme&gt;
-        ///    &lt;Content&gt;Вынеси мусор ебанаротблять&lt;/Content&gt;
-        ///    &lt;DataTime&gt;30.05.19 12:44:55&lt;/DataTime&gt;
-        ///  &lt;/Stiker&gt;
-        ///&lt; [остаток строки не уместился]&quot;;.
+        ///
+        ///&lt;/users&gt;.
         /// </summary>
         internal static string users {
             get {

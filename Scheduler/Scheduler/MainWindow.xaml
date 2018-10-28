@@ -9,7 +9,7 @@
         xmlns:C =" http://www.hardcodet.net/taskbar"
 
         mc:Ignorable="d"
-        Title="MainWindow" Height="471.625" Width="650" Closing="AppInTray">
+        Title="MainWindow" Height="472" Width="650" Closing="AppInTray" MinWidth="650" MinHeight="472" MaxHeight="472" MaxWidth="650">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,16 +27,16 @@
 
         <Grid>
 
-            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,90,75,20">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="75,83,75,20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" >
+                <StackPanel x:Name="listPanel" Margin="0" Background="#33C1DBEA" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
                 </StackPanel>
 
             </ScrollViewer>
 
 
-            <StackPanel x:Name="UpLine" Background="#FF7378EC" Margin="0,0,0,370">
+            <StackPanel x:Name="UpLine" Background="#FF7378EC" Margin="0,0,0,370" VerticalAlignment="Top">
 
                 <Grid Height="60">
                     <Grid.ColumnDefinitions>
@@ -52,7 +52,6 @@
                     <materialDesign:PopupBox Grid.Column="2" Margin="103,4,0,9" Name="SettingBtn"
                   Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                   PlacementMode="BottomAndAlignCentres"
-                  ToolTipService.Placement="Right"
                   ToolTip="{DynamicResource settingBtn}" Height="Auto" Width="47" Background="#FFE86363">
                         <materialDesign:PopupBox.ToggleContent >
                             <materialDesign:PackIcon Kind="SettingsOutline" Height="28" Width="28" />
@@ -70,28 +69,24 @@
             </StackPanel>
 
         </Grid>
-        <Grid Name="AddSetGrid" Visibility="Hidden">
-            <Frame x:Name="addFrame" Content="" HorizontalAlignment="Center" Height="297" Margin="186,83,186,0" VerticalAlignment="Top" Width="270" Background="#BFFFFFFF"/>
-            <Label x:Name="themeIn" Content="{DynamicResource themeIn}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="218,94,0,0" VerticalAlignment="Top" Width="61" FontFamily="Sitka Display" FontSize="16" Height="33"/>
-            <TextBox x:Name="temaBox" HorizontalAlignment="Left" Height="33" Margin="283,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" FontFamily="Comic Sans MS" FontSize="14"/>
-            <Label x:Name="opisanieIn" Content="{DynamicResource opisanieIn}" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="193,127,0,0" VerticalAlignment="Top" Width="89" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
-            <xctk:RichTextBox Name ="textToEl" Margin="283,132,210,210">
+        <Grid Name="AddSetGrid" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Frame x:Name="addFrame" Content="" HorizontalAlignment="Stretch" Height="297" Margin="186,10,186,0" VerticalAlignment="Stretch" Width="270" Background="#BFFFFFFF"/>
+            <Label x:Name="themeIn" Content="{DynamicResource themeIn}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="214,95,366,313" VerticalAlignment="Stretch" FontFamily="Sitka Display" FontSize="16" Height="33"/>
+            <TextBox x:Name="temaBox" HorizontalAlignment="Stretch" Height="33" Margin="70,-230,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="149" FontFamily="Comic Sans MS" FontSize="14"/>
+            <Label x:Name="opisanieIn" Content="{DynamicResource opisanieIn}" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="181,128,0,0" VerticalAlignment="Top" Width="89" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
+            <xctk:RichTextBox Name ="textToEl" Margin="283,132,210,182" FontFamily="Comic Sans MS">
 
             </xctk:RichTextBox>
 
-            <DatePicker Name="dataEl" HorizontalAlignment="Center"
+            <DatePicker Name="dataEl"
                   materialDesign:HintAssist.Hint="{DynamicResource dataEl}"
-                  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="260,231,263,163" />
+                  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="265,261,262,133" />
 
-            <materialDesign:TimePicker Name="timeEl" HorizontalAlignment="Center"
+            <materialDesign:TimePicker Name="timeEl" 
                   materialDesign:HintAssist.Hint="{DynamicResource timeEl}"
                   Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                   Is24Hours="True"
-                  Margin="258,299,259,0" Height="28" />
-
-            <ToggleButton Name="Volume"
-                  Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                  ToolTip="Default ToggleButton Style" Margin="357,329,220,67" />
+                  Margin="265,329,262,0" Height="28" />
 
             <Button Name="saveBut" Click="saveClick"
                 Style="{StaticResource MaterialDesignRaisedAccentButton}"
@@ -100,7 +95,6 @@
                 Content="{DynamicResource saveBut}">
 
             </Button>
-            <Label x:Name="volumeOn" Content="{DynamicResource volumeOn}" HorizontalAlignment="Left" Margin="218,336,0,0" VerticalAlignment="Top" Width="164" FontFamily="Sitka Display" FontSize="16" RenderTransformOrigin="0.152,0.444"/>
 
 
         </Grid>
@@ -122,7 +116,7 @@
 
         </Grid>
         <Grid Name="LangGrid" Visibility="Hidden" Margin="0,71,0,0">
-            <ListBox Name="menuLanguage" Margin="239,-8,238,262"  Background="#FF7378EC" HorizontalAlignment="Center" Width="165" HorizontalContentAlignment="Left" />
+            <ListBox Name="menuLanguage" Margin="239,-11,238,274"  Background="#FF7378EC" HorizontalAlignment="Center" Width="165" HorizontalContentAlignment="Left" />
         </Grid>
 
     </Grid>
